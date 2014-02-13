@@ -1,4 +1,4 @@
-module = angular.module('App', ['ui.router'])
+module = angular.module('App', ['ui.router', 'App.Authentication', 'App.Guest'])
 
 module.config ($urlRouterProvider, $provide) ->
 

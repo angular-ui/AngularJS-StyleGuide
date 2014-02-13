@@ -1,18 +1,30 @@
+###
+Login Module
+============
+
+In here we're demonstrating opening a modal upon entering a state (instead of swapping a view).
+###
+
 # Tracks the previous location and allows you to redirect back to that location
 previousLocation = null
 
-module = angular.module('App.Login', ['ui.router']).config ($stateProvider) ->
+module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']).config ($stateProvider) ->
     $stateProvider.state 'login',
         url: '/login'
         template: ''
         onEnter: ($modal) ->
-
+            # This is a feature of UI-Bootstrap Modal
+            # It allows you to programmatically open async modals
             $modal.open
                 templateUrl: "modules/login/loginModal.html"
                 controller: 'Login'
                 resolve:
-                    user: -> undefined
+                    user: ->
+                        # Although this is a fresh user, if a UserObject is passed the username will be pre-filled
+                        # @TODO Find a way to make this resolve optional(?)
+                        undefined
                     redirect: ($location) -> ->
+                        # Note we're returning a function to be called later, that has the redirect info pre-filled
                         # TODO: Change to state code
                         $location.path( previousLocation )
 

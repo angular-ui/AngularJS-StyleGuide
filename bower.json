@@ -1,0 +1,27 @@
+{
+  "name": "AngularJS-ORM",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ProLoser/AngularJS-ORM",
+  "authors": [
+    "Dean Sofer <proloser@hotmail.com>"
+  ],
+  "description": "AngularJS ORM Example Application",
+  "main": "modules/App.coffee",
+  "keywords": [
+    "angularjs"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "bacon": "~0.7.2",
+    "angular": "~1.2.12"
+  }
+}

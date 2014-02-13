@@ -53,3 +53,11 @@ module.factory 'BaseObject', ($q) ->
         ###
         close: ->
             listener() while listener = @listeners.pop()
+            
+module.factory 'AppObject', (BaseObject, Socket) ->
+	class AppObject extends BaseObject
+		constructor: (upStream, downStream, initData) ->
+			super(upStream, downStream, initData)
+			
+	# Singleton, this is where the socket streams are wired into the ORM
+	new AppObject(Socket.queryStream, Socket.eventStream)

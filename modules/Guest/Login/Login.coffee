@@ -10,6 +10,7 @@ previousLocation = null
 
 module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']).config ($stateProvider) ->
     $stateProvider.state 'login',
+        parent: 'guest'
         url: '/login'
         template: ''
         onEnter: ($modal) ->

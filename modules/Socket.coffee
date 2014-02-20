@@ -1,6 +1,6 @@
 module = angular.module('App')
 
-module.factory 'Socket', ($q) ->
+module.factory 'Socket', ($q, $rootScope) ->
 
 	class Socket
 		constructor: ->
@@ -17,6 +17,7 @@ module.factory 'Socket', ($q) ->
 			@eventStream = new Bacon.Bus()
 			# TODO: Change to proper onmessage code
 			@socket.onmesssage = ->
-				@eventStream.push()
+				$rootScope.$apply ->
+					@eventStream.push()
 
 	new Socket()

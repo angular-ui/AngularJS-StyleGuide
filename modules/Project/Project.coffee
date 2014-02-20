@@ -48,11 +48,17 @@ module.factory 'ProjectObject', (BaseObject, TaskObject) ->
         constructor: (upStream, downStream, initData) ->
             super(upStream, downStream, initData)
             
-            # keep @tasks collection up-to-date
+            
             @downStream.onValue (data) =>
                 switch data.event
+                    # cleanup this project from memory
                     when 'projectDeleted'
                         @close()
+                    # keep this object up-to-date
+                    when 'projectUpdated'
+                        for value, property in data
+                            @[property] = value
+                    # keep @tasks collection up-to-date
                     when 'taskCreated'
                         @tasks?[data.id] = new TaskObject(@upStream, @downStream, data)
                     when 'taskDeleted'
@@ -84,6 +90,18 @@ module.factory 'ProjectObject', (BaseObject, TaskObject) ->
             else
                 @getTasks().then => # => preserves the `this` reference
                     @tasks[id] or @reject()
+                    
+        create: ->
+                                             # Pass `this` as the payload
+            @query( { method: 'createProject', data: @ } ).then (project) =>
+                # Apply the generated ID to this object
+                @id = project.id
+                # keep in mind that this object should be discarded, as a
+                # duplicate instance (attached to the proper streams) will be auto-generated
+                
+        update: ->
+                                             # Pass `this` as the payload
+            @query( { method: 'updateProject', data: @ } )
                     
         close: ->
             super()

@@ -81,7 +81,7 @@ module.factory 'AppObject', (BaseObject, Socket) ->
                 @projects = {}
                 
                 # each project is spun up as a ProjectObject instance
-                for id, project of projects
+                for project, id of projects
                     @projects[id] = new ProjectObject(@upStream, @downStream, project)
                     
                 # return the collection

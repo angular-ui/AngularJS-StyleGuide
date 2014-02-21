@@ -16,8 +16,8 @@ module.factory 'Socket', ($q, $rootScope) ->
 		setupEventStream: ->
 			@eventStream = new Bacon.Bus()
 			# TODO: Change to proper onmessage code
-			@socket.onmesssage = ->
+			@socket.onmesssage = (data) ->
 				$rootScope.$apply ->
-					@eventStream.push()
+					@eventStream.push(data)
 
 	new Socket()

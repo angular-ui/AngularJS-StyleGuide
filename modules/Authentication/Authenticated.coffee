@@ -18,7 +18,7 @@ module.config ($stateProvider) ->
         onEnter: (user) ->
             user.open()
             $rootScope.currentUser = user
-        onExit: (AppObject, $rootScope) ->
-            AppObject.close()
+        onExit: (user, $rootScope) ->
+            user.close()
             $rootScope.currentUser = null
  

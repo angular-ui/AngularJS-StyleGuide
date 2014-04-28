@@ -35,8 +35,17 @@ module.factory 'BaseObject', ($q) ->
 
         delete: ->
 
-        query: (payload) ->
+        query: (data) ->
+            # TODO: Payload should probably be decorated with additional 
+            # metadata such as path, method, object, crud action, context (foreign ids / owners / etc ), 
+            # and other such stuff
+            payload =
+                data: data
+                deferred: $q.defer()
+                
             @upStream.push(payload)
+            
+            payload.deferred.promise
 
         clone: ->
             new @constructor(null, null, @)

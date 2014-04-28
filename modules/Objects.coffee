@@ -6,8 +6,7 @@ module.factory 'BaseObject', ($q) ->
         constructor: (upStream = new Bacon.Bus(), @downStream = new Bacon.Bus(), initData = {}) ->
             @upStream = new Bacon.Bus()
             # Make this object stream push into the parent object stream
-            # TODO: bus.merge() may be the wrong method
-            upStream.merge( @upStream )
+            upStream.plug( @upStream )
             _.extend( @, initData )
             @promiseCaches = {}
             @listeners = []

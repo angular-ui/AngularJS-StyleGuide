@@ -13,9 +13,16 @@ module = angular.module('App.Project', ['ui.router', 'ui.bootstrap']).config ($s
         resolve:
             projects: (AppObject) ->
                 AppObject.getProjects()
+    $stateProvider.state 'projects.new',
+        url: '/new' # /projects/new (state must be defined BEFORE /:projectId)
+        resolve:
+            project: (ProjectObject) ->
+                new ProjectObject() # shiny new project to work with on the form
+        templateUrl: 'modules/Project/Form.html'
+        controller: 'ProjectForm'
     $stateProvider.state 'project',
         parent: 'projects'
-        url: '/:projectId' # /projects/:projectId
+        url: '/:projectId' # /projects/:projectId (state must be defined AFTER /new)
         views:
             '': # Projects.html: <ui-view></ui-view>
                 templateUrl: 'modules/Project/Project.html'
@@ -30,6 +37,10 @@ module = angular.module('App.Project', ['ui.router', 'ui.bootstrap']).config ($s
             project.open()
         onExit: (project) ->
             project.close()
+            
+    $stateProvider.state 'project.edit',
+        templateUrl: 'modules/Project/Form.html'
+        controller: 'ProjectForm'
 
 module.controller 'Projects', ($scope, projects) ->
     $scope.projects = projects
@@ -38,10 +49,12 @@ module.controller 'Projects', ($scope, projects) ->
 module.controller 'Project', ($scope, project) ->
     $scope.project = project
     
-    
 module.controller 'ProjectHeader', ($scope, project) ->
     $scope.project = project
     
+module.controller 'ProjectForm', ($scope, project) ->
+    # injected `project` is either a new object or an existing object
+    $scope.project = project
             
 module.factory 'ProjectObject', (BaseObject, TaskObject) ->
     class ProjectObject extends BaseObject

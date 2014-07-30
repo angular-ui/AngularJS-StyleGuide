@@ -75,7 +75,7 @@ module.factory 'AppObject', (BaseObject, Socket) ->
             @downStream.onValue (data) =>
                 switch data.event
                     when 'projectCreated'
-                        @projects?[data.id] = new ProjectObject(@upStream, @downStream, data)
+                        @projects?[data.id] = @newProject(data)
                     when 'projectDeleted'
                         delete @projects?[data.id]
                         
@@ -90,7 +90,7 @@ module.factory 'AppObject', (BaseObject, Socket) ->
                 
                 # each project is spun up as a ProjectObject instance
                 for project, id of projects
-                    @projects[id] = new ProjectObject(@upStream, @downStream, project)
+                    @projects[id] = @newProject(project)
                     
                 # return the collection
                 @projects
@@ -101,6 +101,9 @@ module.factory 'AppObject', (BaseObject, Socket) ->
             else
                 @getProjects().then => # => preserves the `this` reference
                     @projects[id] or @reject()
+                    
+        newProject: (initData) ->
+            new ProjectObject(@upStream, @downStream, initData)
                     
         close: ->
             super()

@@ -16,8 +16,8 @@ module = angular.module('App.Project', ['ui.router', 'ui.bootstrap']).config ($s
     $stateProvider.state 'projects.new',
         url: '/new' # /projects/new (state must be defined BEFORE /:projectId)
         resolve:
-            project: (ProjectObject) ->
-                new ProjectObject() # shiny new project to work with on the form
+            project: (AppObject) ->
+                AppObject.newProject()
         templateUrl: 'modules/Project/Form.html'
         controller: 'ProjectForm'
     $stateProvider.state 'project',

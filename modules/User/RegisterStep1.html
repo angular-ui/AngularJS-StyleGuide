@@ -1,0 +1,6 @@
+<h2>Step 1</h2>
+<form ng-submit="step1.$$valid && $state.go('register.step2')">
+  <input ng-model="user.name" required>
+  <input ng-model="user.email" required>
+  <button type="submit">Next Step</button>
+</form>

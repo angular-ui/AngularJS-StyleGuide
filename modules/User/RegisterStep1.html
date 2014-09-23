@@ -1,6 +1,6 @@
 <h2>Step 1</h2>
 <form ng-submit="step1.$$valid && $state.go('register.step2')" name="step1" novalidate>
-  <input ng-model="user.name" ng-pattern="user.prototype.rules.name">
+  <input ng-model="user.name" ng-pattern="user.validation.name">
   <input ng-model="user.email" required>
   <button type="submit">Next Step</button>
 </form>

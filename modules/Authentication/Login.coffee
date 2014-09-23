@@ -17,7 +17,7 @@ module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']).config ($sta
             # This is a feature of UI-Bootstrap Modal
             # It allows you to programmatically open async modals
             $modal.open
-                templateUrl: "modules/Authentication/loginModal.html"
+                templateUrl: "modules/Authentication/Login.html"
                 controller: 'Login'
                 resolve:
                     user: ->

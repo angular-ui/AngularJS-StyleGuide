@@ -1,0 +1,7 @@
+<h2>Step 3</h2>
+<form ng-submit="step3.$$valid && $state.go('register.step2')" name="step3" novalidate>
+  <input ng-model="user.password" required ui-validate="$value==user.confirm_password">
+  <input ng-model="user.confirm_password" required ui-validate="$value==user.password">
+  <button ui-sref="register.step2" type="button">Prev Step</button>
+  <button type="submit">Next Step</button>
+</form>

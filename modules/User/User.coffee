@@ -57,8 +57,7 @@ module.factory 'UserObject', (BaseObject) ->
     class UserObject extends BaseObject
         # ... 
         
-        # @rules: this is a Class property instead of an Object property
-        @rules: {
+        validation: {
             name: '[a-zA-Z0-1]{4,}' # 4 or more alphanum chars
             email: '.+@gmail.com'
         }
@@ -68,7 +67,7 @@ module.factory 'UserObject', (BaseObject) ->
             if !rules[property]
                 return true
                                 # @::rules means this.prototype.rules
-            pattern = new RegExp(@::rules[property])
+            pattern = new RegExp(@validation[property])
             pattern.test(@[property])
 
 module.factory 'RegistrationWizard', () ->

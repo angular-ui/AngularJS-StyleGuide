@@ -27,7 +27,7 @@ module = angular.module('App.Project', ['ui.router', 'ui.bootstrap']).config ($s
             '': # Projects.html: <ui-view></ui-view>
                 templateUrl: 'modules/Project/Project.html'
                 controller: 'Project'
-            '@header': # Authenticated.html: <ui-view name="header"></ui-view>
+            'header@authenticated': # Authenticated.html: <ui-view name="header"></ui-view>
                 templateUrl: 'modules/Project/ProjectHeader.html'
                 controller: 'ProjectHeader'
         resolve:

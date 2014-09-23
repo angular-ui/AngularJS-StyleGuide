@@ -28,9 +28,19 @@ module = angular.module('App.User', ['ui.router']).config ($stateProvider) ->
     $stateProvider.state 'register.step2',
         url: '/step2' # /register/step1
         templateUrl: 'modules/User/RegisterStep2.html'
+        resolve:
+            # prevent accessing step prematurely
+            validate: (user, $state) ->
+                if !user.stepsCompleted(1)
+                    $state.go('register.step1')
     $stateProvider.state 'register.step3',
         url: '/step3' # /register/step3
         templateUrl: 'modules/User/RegisterStep3.html'
+        resolve:
+            # prevent accessing step prematurely
+            validate: (user, $state) ->
+                if !user.stepsCompleted(2)
+                    $state.go('register.step2')
 
 module.controller 'Users', ($scope, users) ->
     $scope.users = users

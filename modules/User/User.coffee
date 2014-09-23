@@ -3,7 +3,8 @@ User Module
 ============
 ###
 
-module = angular.module('App.User', ['ui.router']).config ($stateProvider) ->
+                                                # part of angular-ui/ui-utils
+module = angular.module('App.User', ['ui.router', 'ui.validate']).config ($stateProvider) ->
     $stateProvider.state 'users',
         parent: 'admin'
         url: '/users'
@@ -12,6 +13,7 @@ module = angular.module('App.User', ['ui.router']).config ($stateProvider) ->
         resolve:
             users: (AppObject) ->
                 AppObject.getUsers()
+                
     # Multi-Step Registration Wizard
     $stateProvider.state 'register',
         parent: 'guest'
@@ -51,3 +53,6 @@ module.controller 'UserForm', ($scope, user) ->
 module.factory 'UserObject', (BaseObject) ->
     class UserObject extends BaseObject
         # ... 
+        stepsCompleted: (stepCount) ->
+            ...
+            # return Boolean

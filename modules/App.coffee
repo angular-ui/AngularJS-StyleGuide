@@ -1,9 +1,12 @@
 module = angular.module('App', ['ui.router', 'App.Authentication', 'App.Guest'])
 
-module.config ($urlRouterProvider, $provide) ->
+module.config ($urlRouterProvider, $rootScope) ->
 
 	# Default State
     $urlRouterProvider.otherwise("projects")
+    
+    $rootScope.$on 'stateChangeError', (event, toState, toParams, fromState, fromParams, error) ->
+    	console.log( event, toState, toParams, fromState, fromParams, error )
 
 
 module.run () ->

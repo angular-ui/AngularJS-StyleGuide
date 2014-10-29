@@ -58,22 +58,22 @@ module.controller 'TaskForm', ($scope, task) ->
             
 module.factory 'TaskObject', (BaseObject) ->
     class TaskObject extends BaseObject
-        constructor: (upStream, downStream, initData) ->
-            super(upStream, downStream, initData)
+        constructor: (queryStream, eventStream, initData) ->
+            super(queryStream, eventStream, initData)
             
             
-            @downStream.onValue (data) =>
+            @eventStream.listen (data) =>
                 switch data.event
                     # cleanup this project from memory
                     when 'taskDeleted'
-                        @close()
+                        @destroy()
                     # keep this object up-to-date
                     when 'taskUpdated'
                         for value, property in data
                             @[property] = value
                         
             # Decorate queries with context
-            @upStream.onValue (data) =>
+            @queryStream.listen (data) =>
                 data.taskId = @id
         
         

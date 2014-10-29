@@ -1,23 +1,58 @@
 module = angular.module('App')
 
-module.factory 'Socket', ($q, $rootScope) ->
+module.factory 'Socket', (Stream, $rootScope) ->
 
 	class Socket
-		constructor: ->
+		constructor: (@url) ->
+			@queue = []
+
+			@open()
+
+
+		setupQueryStream: ->
+			# opening a socket is async and a queue may form
+			@socket.onopen = =>
+				@flush()
+
+			if !@queryStream
+				@queryStream ?= new Stream()
+
+				@queryStream.listen (data) =>
+
+					# Stringify now in case data changes while waiting in @queue
+					data = JSON.stringify(data)
+
+					if @socket.readyState is WebSocket.OPEN
+						@send(data)
+					else
+						@queue.push(data)
+						if @socket.readyState is WebSocket.CLOSE
+							@open()
+
+
+		setupEventStream: ->
+			@eventStream ?= new Stream()
+
+			@socket.onmesssage = (data) =>
+				# Now Entering AngularJS...
+				$rootScope.$apply ->
+					@eventStream.push( JSON.parse(data) )
+
+
+		close: ->
+			@socket.close()
+
+		open:  ->
+			@socket = new WebSocket(@url)
 			@setupQueryStream()
 			@setupEventStream()
 
-		setupQueryStream: ->
-			@queryStream = new Bacon.Bus()
-			@queryStream.onValue (payload) ->
-				# TODO: Change to proper query code
-				@socket.query(payload)
 
-		setupEventStream: ->
-			@eventStream = new Bacon.Bus()
-			# TODO: Change to proper onmessage code
-			@socket.onmesssage = (data) ->
-				$rootScope.$apply ->
-					@eventStream.push(data)
+		send: (data) ->
+			@socket.send( data )
 
-	new Socket()
+		flush: ->
+			while item = @queue.pop()
+				@send(item)
+
+	new Socket('/api')

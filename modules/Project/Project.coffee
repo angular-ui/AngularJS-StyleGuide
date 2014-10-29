@@ -60,11 +60,11 @@ module.controller 'ProjectForm', ($scope, project) ->
             
 module.factory 'ProjectObject', (BaseObject, TaskObject) ->
     class ProjectObject extends BaseObject
-        constructor: (upStream, downStream, initData) ->
-            super(upStream, downStream, initData)
+        constructor: (queryStream, eventStream, initData) ->
+            super(queryStream, eventStream, initData)
             
             
-            @downStream.onValue (data) =>
+            @eventStream.listen (data) =>
                 switch data.event
                     # cleanup this project from memory
                     when 'projectDeleted'
@@ -75,12 +75,12 @@ module.factory 'ProjectObject', (BaseObject, TaskObject) ->
                             @[property] = value
                     # keep @tasks collection up-to-date
                     when 'taskCreated'
-                        @tasks?[data.id] = new TaskObject(@upStream, @downStream, data)
+                        @tasks?[data.id] = new TaskObject(@queryStream, @eventStream, data)
                     when 'taskDeleted'
                         delete @tasks?[data.id]
                         
             # Decorate queries with context
-            @upStream.onValue (data) =>
+            @queryStream.listen (data) =>
                 data.projectId = @id
                         
         getTasks: ->
@@ -94,7 +94,7 @@ module.factory 'ProjectObject', (BaseObject, TaskObject) ->
                 
                 # each task is spun up as a ProjectObject instance
                 for task, id of tasks
-                    @tasks[id] = new TaskObject(@upStream, @downStream, task)
+                    @tasks[id] = new TaskObject(@queryStream, @eventStream, task)
                     
                 # return the collection
                 @tasks

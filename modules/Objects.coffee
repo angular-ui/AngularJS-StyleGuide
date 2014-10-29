@@ -1,26 +1,39 @@
 module = angular.module('App')
 
-module.factory 'BaseObject', ($q) ->
+module.factory 'BaseObject', ($q, Stream) ->
     
     class BaseObject
-        constructor: (upStream = new Bacon.Bus(), @downStream = new Bacon.Bus(), initData = {}) ->
-            @upStream = new Bacon.Bus()
-            # Make this object stream push into the parent object stream
-            upStream.plug( @upStream )
-            _.extend( @, initData )
-            @promiseCaches = {}
+        constructor: (parentQueryStream, parentEventStream, initData = {}) ->
+
+            for value, property in initData
+                @[property] = value
+
+            @queryStream = new Stream()
+            @eventStream = new Stream()
+
+            # for cleaning up later
             @listeners = []
 
+            if parent
+                # Queries go up
+                @listeners.push @queryStream.child( parentQueryStream )
+                # Events come down
+                @listeners.push parentEventStream.child( @eventStream )
+
+
+        ###
+        Switch to high-memory mode
+
+        Usually means it's being rendered on screen and should get extra details and keep them updated
+        ###
         open: ->
 
-        close: ->
+        ###
+        Switch to low-memory mode
 
-        cache: (key, execute) ->
-            if !@promiseCaches[key]?
-                @promiseCaches[key] = execute().then (data) =>
-                    @promiseCaches[key] = null
-                    data
-            @promiseCaches[key]
+        Unsubscribe unnecessary overhead
+        ###
+        close: ->
 
         # Convenience wrapper
         save: ->
@@ -36,43 +49,42 @@ module.factory 'BaseObject', ($q) ->
         delete: ->
 
         query: (data) ->
-            # TODO: Payload should probably be decorated with additional metadata such 
-            # as path, method, object, crud action, context (foreign ids / owners / etc ), 
-            # and other such stuff
-            payload =
-                data: data
-                deferred: $q.defer()
-                
-            @upStream.push(payload)
-            
-            payload.deferred.promise
+            @queryStream.push(data)
 
+        ###
+        Make a copy of object for use in forms
+
+        When you edit a record in a form, you want the original to be preserved while the user makes changes
+        This allows you to edit a record exactly as if you were creating one without having to worry about
+        rolling back changes to the object.
+        ###
         clone: ->
-            new @constructor(null, null, @)
+            constructor = Object.getPrototypeOf(@).constructor
+            # TODO: add support for queries by passing parent(?)
+            new constructor(null, null, @)
+
+        ###
+        Cleans up listeners (should run when discarding object)
+        ###
+        destroy: ->
+            while listener = @listeners.pop()
+                listener()
         
         # Convenience wrapper so we don't have to inject $q everywhere    
         resolve: $q.when
         
         # Convenience wrapper so we don't have to inject $q everywhere
         reject: $q.reject
-            
-        ###
-        Closes all open stream listeners
 
-        To register a listener for cleanup, do the following
-        @listeners.push @streams.someStream.onValue(...)
-        ###
-        close: ->
-            listener() while listener = @listeners.pop()
 
             
 module.factory 'AppObject', (BaseObject, Socket) ->
     class AppObject extends BaseObject
-        constructor: (upStream, downStream, initData) ->
-            super(upStream, downStream, initData)
+        constructor: (queryStream, eventStream, initData) ->
+            super(queryStream, eventStream, initData)
             
             # keep @projects collection up-to-date
-            @downStream.onValue (data) =>
+            @eventStream.listen (data) =>
                 switch data.event
                     when 'projectCreated'
                         @projects?[data.id] = @newProject(data)
@@ -97,13 +109,13 @@ module.factory 'AppObject', (BaseObject, Socket) ->
                 
         getProject: (id) ->
             if @projects
-                @resolve(@projects[id])
+                @projects[id]? @resolve(@projects[id]) or @reject()
             else
                 @getProjects().then => # => preserves the `this` reference
                     @projects[id] or @reject()
                     
         newProject: (initData) ->
-            new ProjectObject(@upStream, @downStream, initData)
+            new ProjectObject(@queryStream, @eventStream, initData)
                     
         close: ->
             super()

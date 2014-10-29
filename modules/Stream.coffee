@@ -1,12 +1,12 @@
 module = angular.module('App')
 
-module.factory 'Streamer', ($q) ->
+module.factory 'Stream', () ->
 
-    class Streamer
+    class Stream
         constructor: ->
             @listeners = []
         
-        on: (listener) ->
+        listen: (listener) ->
             @listeners.push(listener)
         
             =>

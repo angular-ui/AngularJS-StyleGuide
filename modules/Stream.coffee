@@ -32,7 +32,7 @@ module.factory 'Stream', () ->
             
         # Events from this stream will then go into the passed stream
         child: (stream) ->
-            @children.push stream
+            @children.push(stream)
             
             # unsubscriber
             =>

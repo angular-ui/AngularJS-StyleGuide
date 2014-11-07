@@ -24,10 +24,11 @@ module.factory 'Stream', () ->
                 data = listener(data, changeData) || data
                 
             for childStream in @children
-                childStream(data)
+                childStream.push(data)
         
         destroy: ->
             @listeners = []
+            @children = []
             
         # Events from this stream will then go into the passed stream
         child: (stream) ->

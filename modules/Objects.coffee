@@ -14,9 +14,10 @@ module.factory 'BaseObject', ($q, Stream) ->
             # for cleaning up later
             @listeners = []
 
-            if parent
+            if parentQueryStream
                 # Queries go up
                 @listeners.push @queryStream.child( parentQueryStream )
+            if parentEventStream
                 # Events come down
                 @listeners.push parentEventStream.child( @eventStream )
 

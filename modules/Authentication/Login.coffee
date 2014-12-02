@@ -8,7 +8,9 @@ In here we're demonstrating opening a modal upon entering a state (instead of sw
 # Tracks the previous location and allows you to redirect back to that location
 previousLocation = null
 
-module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']).config ($stateProvider) ->
+module = angular.module('App.Login', ['ui.router', 'ui.bootstrap'])
+
+module.config ($stateProvider) ->
     $stateProvider.state 'login',
         parent: 'guest'
         url: '/login'

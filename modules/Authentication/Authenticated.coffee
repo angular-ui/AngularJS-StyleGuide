@@ -12,11 +12,12 @@ module.config ($stateProvider) ->
         templateUrl: 'modules/Authenticated/Authenticated.html'
         abstract: true
         resolve:
-            currentUser: (AppObject, Authentication, $state) ->
+            currentUser: (AppObject, Authentication, $state, $q) ->
                 Authentication.checkCredentials().then (userId) ->
                     AppObject.getUser(userId)
                 , (error) ->
-                    $state.go('login')
+                    # must return a rejected promise in order to stay in rejected-mode
+                    $q.reject( $state.go('login') )
         onEnter: (user) ->
             user.open()
         onExit: (user, $rootScope) ->

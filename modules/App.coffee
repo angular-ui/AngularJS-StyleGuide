@@ -2,8 +2,8 @@ module = angular.module('App', ['ui.router', 'App.Authentication', 'App.Guest'])
 
 module.config ($urlRouterProvider, $rootScope) ->
 
-    # Default State
-    $urlRouterProvider.otherwise("projects")
+    # Default URL if no matches
+    $urlRouterProvider.otherwise("/projects")
     
     # Global catching of uiRouter errors (for development)
     $rootScope.$on 'stateChangeError', (event, toState, toParams, fromState, fromParams, error) ->

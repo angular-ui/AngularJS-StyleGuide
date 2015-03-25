@@ -11,7 +11,7 @@ module.factory 'Stream', () ->
             @listeners.push(listener)
         
             # unsubscriber
-            =>
+            return =>
                 @listeners = @listeners.filter (item) ->
                     item != listener
         
@@ -35,6 +35,6 @@ module.factory 'Stream', () ->
             @children.push(stream)
             
             # unsubscriber
-            =>
+            return =>
                 @children = @children.filter (child) ->
                     stream != child

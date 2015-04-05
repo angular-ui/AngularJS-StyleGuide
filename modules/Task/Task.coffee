@@ -35,21 +35,23 @@ module = angular.module('App.Task', ['App.Project', 'ui.router']).config ($state
                 project.getTask($stateParams.taskId)
         onEnter: (task) ->
             task.open()
-        onExit: (project) ->
+        onExit: (task) ->
             task.close()
             
     $stateProvider.state 'task.edit',
         templateUrl: 'modules/Task/Form.html'
         controller: 'TaskForm'
 
-module.controller 'Tasks', ($scope, tasks) ->
+module.controller 'Tasks', ($scope, tasks, project) ->
     $scope.tasks = tasks
+    $scope.tasks = project
     
 
 module.controller 'Task', ($scope, task) ->
     $scope.task = task
     
-module.controller 'TaskHeader', ($scope, task) ->
+module.controller 'TaskHeader', ($scope, task, project) ->
+    $scope.tasks = project
     $scope.task = task
     
 module.controller 'TaskForm', ($scope, task) ->

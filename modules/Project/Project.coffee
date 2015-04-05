@@ -11,14 +11,14 @@ module = angular.module('App.Project', ['ui.router', 'ui.bootstrap']).config ($s
         templateUrl: 'modules/Project/Projects.html'
         controller: 'Projects'
         resolve:
-            projects: (AppObject) ->
+            projects: (authenticatedUser) ->
                 # return [{ name: 'project 1'}, { name: 'project 2'}]
-                return AppObject.getProjects()
+                return authenticatedUser.getProjects()
     $stateProvider.state 'projects.new',
         url: '/new' # /projects/new (state must be defined BEFORE /:projectId)
         resolve:
-            project: (AppObject) ->
-                return AppObject.newProject()
+            project: (authenticatedUser) ->
+                return authenticatedUser.newProject()
         templateUrl: 'modules/Project/Form.html'
         controller: 'ProjectForm'
     $stateProvider.state 'project',
@@ -32,9 +32,9 @@ module = angular.module('App.Project', ['ui.router', 'ui.bootstrap']).config ($s
                 templateUrl: 'modules/Project/ProjectHeader.html'
                 controller: 'ProjectHeader'
         resolve:
-            project: (AppObject, $stateParams) ->
+            project: (authenticatedUser, $stateParams) ->
                 # return projects[$stateParams.projectId]
-                return AppObject.getProject($stateParams.projectId)
+                return authenticatedUser.getProject($stateParams.projectId)
         onEnter: (project) ->
             project.open()
         onExit: (project) ->

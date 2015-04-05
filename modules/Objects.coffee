@@ -81,42 +81,6 @@ module.factory 'BaseObject', ($q, Stream) ->
             
 module.factory 'AppObject', (BaseObject, Socket) ->
     class AppObject extends BaseObject
-        constructor: (queryStream, eventStream, initData) ->
-            super(queryStream, eventStream, initData)
-            
-            # keep @projects collection up-to-date
-            @eventStream.listen (data) =>
-                switch data.event
-                    when 'projectCreated'
-                        @projects?[data.id] = @newProject(data)
-                    when 'projectDeleted'
-                        delete @projects?[data.id]
-                        
-        getProjects: ->
-            # if a collection of projects is already available, we don't need to query
-            if @projects
-                return @resolve(@projects)
-            
-            @query( { method: 'findAllProjects' } ).then (projects) => # => preserves the outter `this` reference
-                # child projects are stored as a collection property
-                @projects = {}
-                
-                # each project is spun up as a ProjectObject instance
-                for project, id of projects
-                    @projects[id] = @newProject(project)
-                    
-                # return the collection
-                @projects
-                
-        getProject: (id) ->
-            if @projects
-                @projects[id]? @resolve(@projects[id]) or @reject()
-            else
-                @getProjects().then => # => preserves the `this` reference
-                    @projects[id] or @reject()
-                    
-        newProject: (initData) ->
-            new ProjectObject(@queryStream, @eventStream, initData)
                     
         close: ->
             super()

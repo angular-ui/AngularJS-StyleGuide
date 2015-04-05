@@ -12,7 +12,7 @@ module.config ($stateProvider) ->
         templateUrl: 'modules/Authenticated/Authenticated.html'
         abstract: true
         resolve:
-            currentUser: (AppObject, Authentication, $state, $q) ->
+            authenticatedUser: (AppObject, Authentication, $state, $q) ->
                 Authentication.checkCredentials().then (userId) ->
                     AppObject.getUser(userId)
                 , (error) ->

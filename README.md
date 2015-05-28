@@ -13,10 +13,10 @@ Notes
 
 You may have noticed **I don't use a src, css, view, controller, etc folders**. That is because I believe in today's architecture, it's more scalable to keep modules together and small. HTML, JS and CSS are closely tied together, so we should start organizing projects that way.
 
-Coffeescript
+ES6 Syntax
 ------------
 
-I use Coffeescript because it gives me easy-to-code classes and because the last line is always returned (which is great for promise chaining). You do not have to use Coffeescript and should not refactor into it 'just because'.
+I use ES6 because it gives me easy-to-code classes and because the last line is always returned in arrow functions (which is great for promise chaining). You do not have to use ES6, and should not refactor into it 'just because'.
 
 ### How To Read
 
@@ -26,19 +26,23 @@ function( x, y, z ){
   return z
 }
 
-this.property( x )
-
-var x = {
-  prop: true
+function x(z) {
+  // constructor
+  this.y = z;
 }
+x.prototype.method = function(){}
 ```
-**Coffeescript**
-```coffee
-( x, y, z ) ->
-  z # last line of functions are always returned
+**ES6**
+```js
+( x, y, z ) => {
+  this.whatever // `this` is bound to OUTER scope
+  z // last line of functions are always returned
+}
 
-@property x # paranthesis are optional
-
-x = # braces are optional
-  prop: true
+class x {
+  constructor(z) {
+    this.y = z;
+  }
+  method(z) {}
+}
 ```

@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.12",
-    "angular-ui-router": "~1"
+    "angular-ui-router": "~1",
+    "angular-ui-utils": "~1"
   }
 }

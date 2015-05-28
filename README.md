@@ -1,6 +1,8 @@
 AngularJS-ORM
 =============
 
+## A collection of best practices and scalable architecture.
+
 This is an example project for my AngularJS-ORM talk at NGConf 2014.  
 Slides: [Slid.es/ProLoser/AngularJS-ORM](http://slid.es/proloser/angularjs-orm)  
 Original Code (Coffeescript + Sockets): [coffee-sockets](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets)  
@@ -13,7 +15,11 @@ Original Code (Coffeescript + Sockets): [coffee-sockets](https://github.com/ProL
 Notes
 -----
 
-You may have noticed **I don't use a src, css, view, controller, etc folders**. That is because I believe in today's architecture, it's more scalable to keep modules together and small. HTML, JS and CSS are closely tied together, so we should start organizing projects that way.
+* **I don't use a src, css, view, controller, etc folders**  
+In today's code, it's sensible keep modules together and small. HTML, JS and CSS are closely tied together, so we should organize projects that way.
+
+* **If you can't open-source your directives, they probably shouldn't exist**  
+A lot of people will create what I refer to as 'one-off' directives. They should usually just be sub-states.
 
 ES6 Syntax
 ------------

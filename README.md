@@ -1,7 +1,7 @@
 AngularJS-ORM
 =============
 
-## A collection of best practices and scalable architecture.
+## An example of scalable architecture
 
 This is an example project for my AngularJS-ORM talk at NGConf 2014.  
 Slides: [Slid.es/ProLoser/AngularJS-ORM](http://slid.es/proloser/angularjs-orm)  

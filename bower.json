@@ -6,7 +6,7 @@
     "Dean Sofer <proloser@hotmail.com>"
   ],
   "description": "AngularJS ORM Example Application",
-  "main": "modules/App.coffee",
+  "main": "modules/App.js",
   "keywords": [
     "angularjs"
   ],

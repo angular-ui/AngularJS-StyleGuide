@@ -7,6 +7,7 @@ Poke around the code, watch the _CONTENT RICH_ video which goes along with an [O
 
 Overall, keep in mind this is a design pattern, **NOT** not a library. It is a series of examples of code to give you ideas and should always come with a grain of salt and some logic before implementing yourself.
 
+[NG-Conf 2014 Talk](http://www.youtube.com/watch?v=Iw-3qgG_ipU)  
 [![NG-Conf 2014 Talk](http://i1.ytimg.com/vi/Iw-3qgG_ipU/0.jpg)](http://www.youtube.com/watch?v=Iw-3qgG_ipU)
 
 --------------------------------------

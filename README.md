@@ -3,7 +3,8 @@ AngularJS-ORM
 
 ## An example of scalable architecture
 
-This is an example project for my AngularJS-ORM talk at NGConf 2014.  
+This is an **example code project** for my AngularJS-ORM talk at NGConf 2014.
+
 Slides: [Slid.es/ProLoser/AngularJS-ORM](http://slid.es/proloser/angularjs-orm)  
 Original Code (Coffeescript + Sockets): [coffee-sockets](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets)  
 [![NG-Conf 2014 Talk](http://i1.ytimg.com/vi/Iw-3qgG_ipU/0.jpg)](http://www.youtube.com/watch?v=Iw-3qgG_ipU)

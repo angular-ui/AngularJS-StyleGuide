@@ -10,8 +10,6 @@ The project demonstrates ways to **leverage ui-router to the greatest of it's ab
 * [Conference talk video](http://www.youtube.com/watch?v=Iw-3qgG_ipU)  
 [![NG-Conf 2014 Talk](http://i1.ytimg.com/vi/Iw-3qgG_ipU/0.jpg)](http://www.youtube.com/watch?v=Iw-3qgG_ipU)
 
-# WEBSCALE, WEBSCALE, WEBSCALE!
-
 
 Tips / Notes
 -----

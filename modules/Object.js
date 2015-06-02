@@ -54,11 +54,7 @@ module.factory('BaseObject', () => {
     /*
     Cleans up listeners (should run when discarding object)
     */
-    destroy() {
-      while (listener = this.listeners.pop()) {
-        listener();
-      }
-    }
+    destroy() {}
   }
 
   return BaseObject;

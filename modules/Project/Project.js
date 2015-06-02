@@ -38,7 +38,7 @@ module.config( ($stateProvider) => {
         templateUrl: 'modules/Project/Project.html',
         controller: 'Project'
       },
-      'headerthis.authenticated': { // Authenticated.html: <ui-view name="header"></ui-view>
+      'header@authenticated': { // Authenticated.html: <ui-view name="header"></ui-view>
         templateUrl: 'modules/Project/ProjectHeader.html',
         controller: 'ProjectHeader'
       }

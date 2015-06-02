@@ -1,19 +1,17 @@
-AngularJS-ORM
+AngularJS-ORM - Example of scalable architecture
 =============
 
-## An example of scalable architecture
+In 2014 I gave a talk at NG-Conf which (unlike half the talks) contains nothing but rich code practices and tips that was quite different from most of the other talks. Sadly, it got snuck in, unofficially at the last minute. This repo and [Slidedeck](http://slid.es/proloser/angularjs-orm) go along with the talk to demonstrate a perscription on how to organize and design your angular apps so that you never run into the problems people jump ship to React or other frameworks for, and can meet any design or scalability challenge with the greatest of ease.
 
-This is an **example code project** for my AngularJS-ORM talk at NGConf 2014.
+Poke around the code, watch the _CONTENT RICH_ video which goes along with an [OLDER VERSION of this repo (using coffeescript and sockets](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets). If you've got questions, open an issue and I'll be happy to give advice or flesh out any parts you're curious about. 
 
-Slides: [Slid.es/ProLoser/AngularJS-ORM](http://slid.es/proloser/angularjs-orm)  
-Original Code (Coffeescript + Sockets): [coffee-sockets](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets)  
+Overall, keep in mind this is a design pattern, **NOT** not a library. It is a series of examples of code to give you ideas and should always come with a grain of salt and some logic before implementing yourself.
+
 [![NG-Conf 2014 Talk](http://i1.ytimg.com/vi/Iw-3qgG_ipU/0.jpg)](http://www.youtube.com/watch?v=Iw-3qgG_ipU)
 
-
-[If you have questions, open an issue](https://github.com/ProLoser/AngularJS-ORM/issues)
 --------------------------------------
 
-Notes
+Tips / Notes
 -----
 
 #### **I don't use a src, css, view, controller, etc folders**  

@@ -21,6 +21,12 @@ In today's code, it's sensible keep modules together and small. HTML, JS and CSS
 * **If you can't open-source your directives, they probably shouldn't exist**  
 A lot of people will create what I refer to as 'one-off' directives. They should usually just be sub-states.
 
+* **Don't do state management inside services/factories**  
+Even though you have an Auth service, or something else, you should always have them bubble their results up to the top of the promise chain. Alway do URL / state jumping from controllers or state definitions, otherwise people have to go diving through a deeply nested chain of service callbacks to figure out why they keep getting an infinite redirect loop. Your services should be implementation agnostic.
+
+* **[Keep controllers implementation agnostic](https://github.com/ProLoser/AngularJS-ORM/blob/master/modules/User/User.js)**  
+Your controllers should be implementation agnostic. Occasionally people use the `ui-boostrap/modal` service which lets you specify a controller and template and resolves. Inside that controller, you have access to `$modalInstance`, which is actually very bad practice. This means if your boss decides one day to no longer use a modal, you have to refactor the controller too (albeit trivially). Instead, have the `$modalInstance` resolve in a state definition, and use the `onEnter()` and `onExit()` callbacks to clean up implementation-specific logic. This leaves the controller free to just focus on it's internal view-related matters. [Example](https://github.com/ProLoser/AngularJS-ORM/blob/master/modules/User/User.js)
+
 ES6 Syntax
 ------------
 

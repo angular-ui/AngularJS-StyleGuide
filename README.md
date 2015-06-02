@@ -1,13 +1,11 @@
 AngularJS-ORM - Example of scalable architecture
 =============
 
-In 2014 I gave a talk at NG-Conf which (unlike half the talks) contains nothing but rich code practices and tips that was quite different from most of the other talks. Sadly, it got snuck in, unofficially at the last minute. This repo and [Slidedeck](http://slid.es/proloser/angularjs-orm) go along with the talk to demonstrate a perscription on how to organize and design your angular apps so that you never run into the problems people jump ship to React or other frameworks for, and can meet any design or scalability challenge with the greatest of ease.
+In 2014 I gave a talk at NG-Conf which (unlike half the talks) contains nothing but rich code practices and tips that was quite different from most of the other talks. Sadly, it got snuck in, unofficially at the last minute. This repo and [Slidedeck](http://slid.es/proloser/angularjs-orm) and [older repo (using coffeescript and sockets](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets) go along with [the conference talk](http://www.youtube.com/watch?v=Iw-3qgG_ipU) to demonstrate a perscription on how to organize and design your angular apps so that you never run into the problems people jump ship to React or other frameworks for, and can meet any design or scalability challenge with the greatest of ease. Open an issue if you've got questions!
 
-Poke around the code, watch the _CONTENT RICH_ video which goes along with an [OLDER VERSION of this repo (using coffeescript and sockets](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets). If you've got questions, open an issue and I'll be happy to give advice or flesh out any parts you're curious about. 
+The project demonstrates ways to **leverage ui-router to the greatest of it's abilities**, how to **keep your controllers down to 1 line of code**, how to **organize your services** in a completely simplified manner, and how to **leverage resolves** like a god.
 
-Overall, keep in mind this is a design pattern, **NOT** not a library. It is a series of examples of code to give you ideas and should always come with a grain of salt and some logic before implementing yourself.
 
-[NG-Conf 2014 Talk](http://www.youtube.com/watch?v=Iw-3qgG_ipU)  
 [![NG-Conf 2014 Talk](http://i1.ytimg.com/vi/Iw-3qgG_ipU/0.jpg)](http://www.youtube.com/watch?v=Iw-3qgG_ipU)
 
 --------------------------------------

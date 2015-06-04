@@ -3,6 +3,7 @@ Login Module
 ============
 
 In here we're demonstrating opening a modal upon entering a state (instead of swapping a view).
+$modal is part of ui.bootstrap
 */
 
 // Tracks the previous location and allows you to redirect back to that location
@@ -25,7 +26,6 @@ module.config( ($stateProvider) => {
           $location.path( previousLocation );
         };
       },
-      // `$modal` is part of angular-ui-bootstrap
       modal: ($modal) => {
         return $modal.open({
           templateUrl: "modules/Authentication/Login.html",

@@ -19,6 +19,13 @@ module.config( ($stateProvider) => {
           });
         });
       }
+    },
+    // breadcrumbs resolved in authenticated state
+    onEnter: function(breadcrumbs) {
+      breadcrumbs.push({ label: 'Tasks', sref: 'tasks' });
+    },
+    onExit: function(breadcrumbs) {
+      breadcrumbs.pop();
     }
   });
 
@@ -30,7 +37,14 @@ module.config( ($stateProvider) => {
       }
     },
     templateUrl: 'modules/Task/Form.html',
-    controller: 'TaskForm'
+    controller: 'TaskForm',
+    // breadcrumbs resolved in authenticated state
+    onEnter: function(breadcrumbs) {
+      breadcrumbs.push({ label: 'New', sref: 'tasks.new' });
+    },
+    onExit: function(breadcrumbs) {
+      breadcrumbs.pop();
+    }
   });
   $stateProvider.state( 'task', {
     parent: 'tasks',
@@ -50,11 +64,13 @@ module.config( ($stateProvider) => {
         return project.getTask($stateParams.taskId);
       }
     },
-    onEnter: (task) => {
+    onEnter: (task, breadcrumbs) => {
       task.open();
+      breadcrumbs.push({ label: task.name, sref: 'task' });
     },
-    onExit: (task) => {
+    onExit: (task, breadcrumbs) => {
       task.close();
+      breadcrumbs.pop();
     }
   });
 

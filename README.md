@@ -5,7 +5,7 @@ The project demonstrates ways to **leverage ui-router to the greatest of it's ab
 
 ### Resources
 
-* [Tips / Notes](https://github.com/ProLoser/AngularJS-ORM/blob/master/TIPS-AND-TRICKS.md)
+* [Tips and Tricks](https://github.com/ProLoser/AngularJS-ORM/blob/master/TIPS-AND-TRICKS.md)
 * [Slidedeck](http://slid.es/proloser/angularjs-orm)
 * [Older Branch (uses coffeescript and sockets)](https://github.com/ProLoser/AngularJS-ORM/tree/coffee-sockets)
 * [ES6 Cheat Sheet](#es6-syntax)

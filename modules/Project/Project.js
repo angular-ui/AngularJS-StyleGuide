@@ -18,7 +18,14 @@ module.config( ($stateProvider) => {
           });
         });
       }
-    }
+    },
+    // `breadcrumbs` resolved in `authenticated` state
+    onEnter: function(breadcrumbs) {
+      breadcrumbs.push({ label: 'Projects', sref: 'projects' });
+    },
+    onExit: function(breadcrumbs) {
+      breadcrumbs.pop();
+    },
   });
   $stateProvider.state( 'projects.new', {
     url: '/new', // /projects/new (state must be defined BEFORE /:projectId)
@@ -28,7 +35,14 @@ module.config( ($stateProvider) => {
       }
     },
     templateUrl: 'modules/Project/Form.html',
-    controller: 'ProjectForm'
+    controller: 'ProjectForm',
+    // `breadcrumbs` resolved in `authenticated` state
+    onEnter: function(breadcrumbs) {
+      breadcrumbs.push({ label: 'New', sref: 'projects.new' });
+    },
+    onExit: function(breadcrumbs) {
+      breadcrumbs.pop();
+    }
   });
   $stateProvider.state( 'project', {
     parent: 'projects',
@@ -50,11 +64,13 @@ module.config( ($stateProvider) => {
         });
       }
     },
-    onEnter: (project) => {
+    onEnter: (project, breadcrumbs) => {
       project.open();
+      breadcrumbs.push({ label: project.name, sref: 'project' }); // Params inferred when going up
     },
-    onExit: (project) => {
+    onExit: (project, breadcrumbs) => {
       project.close();
+      breadcrumbs.pop();
     }
   });
   $stateProvider.state( 'project.edit', {

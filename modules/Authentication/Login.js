@@ -25,6 +25,7 @@ module.config( ($stateProvider) => {
           $location.path( previousLocation );
         };
       },
+      // `$modal` is part of angular-ui-bootstrap
       modal: ($modal) => {
         return $modal.open({
           templateUrl: "modules/Authentication/Login.html",

@@ -1,0 +1,11 @@
+// Authentication/Authenticated.html
+.breadcrumbs {
+  > span {
+    &:after {
+      content: '>';
+    }
+    &:last-child:after {
+      content: '';
+    }
+  }
+}

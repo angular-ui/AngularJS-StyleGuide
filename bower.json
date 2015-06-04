@@ -14,7 +14,7 @@
   "private": true,
   "dependencies": {
     "angular": "~1.2.12",
-    "angular-ui-router": "~1.0.0",
-    "angular-ui-utils": "~1.0.0"
+    "angular-ui-router": "~0.0.0",
+    "angular-ui-utils": "~0.0.0"
   }
 }

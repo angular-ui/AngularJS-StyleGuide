@@ -19,6 +19,9 @@ module.config(function($stateProvider)
               // must return a rejected promise in order to stay in rejected-mode
               return $q.reject( $state.go('login') );
             });
+        },
+        breadcrumbs: () => {
+          return [];
         }
     },
     onEnter: (user) => {

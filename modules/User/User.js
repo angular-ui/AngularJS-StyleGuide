@@ -2,7 +2,7 @@
 User Module
 ============
 
-ui.validate is part of angular-ui/ui-tils
+ui.validate is part of angular-ui-validate
 
 */
 var module = angular.module('App.User', ['ui.router', 'ui.validate']);

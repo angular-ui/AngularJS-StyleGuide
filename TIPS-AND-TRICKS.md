@@ -15,3 +15,6 @@ Your controllers should be implementation agnostic. Occasionally people use the 
 
 #### Keep It Simple, Stupid
 Avoid thin wrappers that just cause obfuscation. If you are turning `$http.get('/api/whatever/' + arg1 + '/' + arg2 + '/' + arg3)` into `whatever(arg1, arg2, arg3)` you're not really gaining anything. Check out how we [use resolves](https://github.com/ProLoser/AngularJS-ORM/blob/b6482fab60a5b0207e2a39929681b10668552745/modules/Authentication/Authenticated.js#L23-L25) to [handle breadcrumbs](https://github.com/ProLoser/AngularJS-ORM/blob/b6482fab60a5b0207e2a39929681b10668552745/modules/Project/Project.js#L22-L28), something you need a lot of control and definition for in every state.
+
+#### Understand `$apply()` in AngularJS
+Keep your `$scope.$apply()` [as close to the top of your stack trace as possible](https://github.com/ProLoser/AngularJS-ORM/blob/8f6fafa2048ec301672c23828ba4eb591fb6cca5/modules/Socket.js#L46). You only need it if you plan to execute some angular-wrapped behavior. **NEVER** use the hack that checks for `$scope.$$phase` as this is a sign you are executing the same logic in angular and outside of angular.

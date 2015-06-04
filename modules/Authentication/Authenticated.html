@@ -1,5 +1,10 @@
 <nav id="header">
   <h1>Company Name</h1>
+  <h3 class="breadcrumbs">
+    <span ng-repeat="crumb in breadcrumbs">
+      <a ui-sref="$state.go(crumb.sref)">{{crumb.label}}</a>
+    </span>
+  </h3>
   <ui-view name="header"></ui-view>
   <ul>
     <li><a ui-sref="login">Logout</a></li>

@@ -19,7 +19,7 @@ Avoid thin wrappers that just cause obfuscation. If you are turning `$http.get('
 #### Understand `$apply()` in AngularJS
 Keep your `$scope.$apply()` [as close to the top of your stack trace as possible](https://github.com/ProLoser/AngularJS-ORM/blob/8f6fafa2048ec301672c23828ba4eb591fb6cca5/modules/Socket.js#L46). You only need it if you plan to execute some angular-wrapped behavior. **NEVER** use the hack that checks for `$scope.$$phase` as this is a sign you are executing the same logic in angular and outside of angular.
 
-#### If your site can be accessed while logged out, just resolve a blank `authUser`
+#### If sections can be accessed logged in AND out, resolve a null `authUser`
 The point of putting the logged in user in the top-level (`authentication state`) resolve is that all of your code can act on this data synchronously and leverage more `bind-once` in your views. If the user logs in or out, **you should reload the entire state tree with the re-resolved `authUser`.** This is because adding listeners for a user logging in and out in your entire codebase causes a massive amount of overhead, and you have to start coding listeners which deal with asynchronous lifecycles of users changing their state. Logging in and out happens at most once a week, so it's just better to not incur the performance and coding penalty just to allow simpler login.
 
 Apps that don't let you access their content without being logged in don't have to deal with this use-case. Otherwise, `$state.reload()` or `$state.go('...', {}, { reload: true })` are your friends.

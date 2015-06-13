@@ -25,6 +25,8 @@ The point of putting the logged in user in the top-level (`authentication state`
 Apps that don't let you access their content without being logged in don't have to deal with this use-case. Otherwise, `$state.reload()` or `$state.go('...', {}, { reload: true })` are your friends.
 
 #### Don't use `controllerAs` in routes. Use it in directives only.
+_pasted from slack_
+
 controller instances are not shareable. Meaning if you put logic into a controller (`this.doSomething()`) although you can reuse the logic elsewhere, you can’t reuse the instance
 controllerAs syntax fixes a few issues, but I believe it will mislead people into thinking it’s okay to bloat controllers, which it isn’t (except for directives)
 the reason is because your special logic that’s usually stateful shouldn’t be in the controller, it should be in something stateful that can be shared

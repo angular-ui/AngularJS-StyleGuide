@@ -79,3 +79,8 @@ If you look at [ui-select](https://github.com/angular-ui/ui-select) i love `cont
 and that really is what it’s doing. It’s the controls for my `ui-select` widget.  
 `personCtrl.person.open()` just doesn’t make sense if you read it. The ‘controller’ (guy doing shit to people) isn’t the one with the method, the object itself has methods that work upon itself.
 Doing `personCtrl.open()` is just a sign of bad design, because controllers should be skinny.
+
+#### Never use scope inheritence across controllers (ui-views)
+This is like using `$rootScope`, it's equivalent to using global variables and relies upon assumptions that variables will exist. It makes controllers (and views) depend on variables that may or may not exist, and makes it difficult for developers to see where these variables came from. If you wish to use a service, resolve or something inside of a route controller or view, you should **always re-inject the dependency and place it on the scope redundantly**. This is single-handedly the key to ensuring that your codebase has a solid contract and that the quality of your code stands up to refactoring. Even if it means placing the same objects onto the same variables in the same place on the scope, do it. Period.
+
+The only time scope inheritence is good is when working with directives. Directives are view-centric data that do nothing more than decorate the scope based on what came before or what comes after, and even this is quickly being deprecated in favor of explicit attributes and highly reusable directives. 

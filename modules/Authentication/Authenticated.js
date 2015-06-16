@@ -12,7 +12,7 @@ module.config(function($stateProvider)
     templateUrl: 'modules/Authenticated/Authenticated.html',
     abstract: true,
     resolve: {
-        authenticatedUser: (User, Authentication, $state, $q, $http) => {
+        user: (User, Authentication, $state, $q) => {
             return Authentication.checkCredentials().then((response) => {
               return new User(response.data);
             }, (error) => {

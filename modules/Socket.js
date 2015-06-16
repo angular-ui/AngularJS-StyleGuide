@@ -19,7 +19,7 @@ module.factory('Socket', (Stream, $rootScope) => {
 			}
 
 			if (!this.queryStream) {
-				this.queryStream = this.queryStream || new Stream();
+				this.queryStream = new Stream();
 
 				this.queryStream.listen( (data) => {
 					// Stringify now in case data changes while waiting in this.queue

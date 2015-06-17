@@ -1,4 +1,4 @@
-angular.module('app').factory('Paginator', function($http){
+angular.module('App').factory('Paginator', function($http){
 
   var Paginator = function(url, options){
     this.url = url;

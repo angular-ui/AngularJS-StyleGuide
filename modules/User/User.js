@@ -112,7 +112,7 @@ module.factory( 'RegistrationWizard', () => {
     }
 
     step1() {
-      return user.valid('name') && user.valid('email');
+      return this.user.valid('name') && this.user.valid('email');
     }
 
     step2() {
@@ -120,7 +120,7 @@ module.factory( 'RegistrationWizard', () => {
     }
 
     step3() {
-      return user.valid('password');
+      return this.user.valid('password');
     }
   }
 

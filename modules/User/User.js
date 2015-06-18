@@ -14,12 +14,8 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/User/Users.html',
     controller: 'Users',
     resolve: {
-      users: (User, $http) => {
-        return $http.get('/api/users').then( (response) => {
-          return response.data.map( (user) => {
-            return new User(user);
-          });
-        });
+      users: (User) => {
+        return User.list();
       }
     }
   });
@@ -80,8 +76,18 @@ module.controller( 'UserForm', ($scope, user, wizard) => {
   $scope.wizard = wizard;
 });
 
-module.factory( 'User', (BaseObject) => {
+module.factory( 'User', (BaseObject, $http) => {
   class User extends BaseObject {
+    
+    static list() {
+      return $http.get('/api/users').then( (response) => {
+        return response.data.map( (user) => {
+          return new User(user);
+        });
+      });
+    }
+    
+    
     // checks validity of the property (probably should be in BaseObject)
     validate(property) {
       if (!rules[property])

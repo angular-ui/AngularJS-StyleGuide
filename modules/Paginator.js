@@ -44,18 +44,17 @@ angular.module('App').factory('Paginator', function($q){
     }
     
     more() {
-      this.loading = true;
-  
       if (this.hasMore) {
+        this.loading = true;
+        
         return this.paginate(this.options).then((response) => {
           //If the results are less than the required limit then the results are finished
           this.hasMore = response.data.results.length >= this.options.limit;
           
           this.items = this.items.concat(response.data.results);
           this.options.offset = this.items.length;
-          this.loading = false;
           return this.items;
-        });
+        }).finally(() => this.loading = false);
       } else {
         return $q.when(this.items);
       }

@@ -49,9 +49,8 @@ angular.module('App').factory('Paginator', function($q){
       if (this.hasMore) {
         return this.paginate(this.options).then((response) => {
           //If the results are less than the required limit then the results are finished
-          if(response.data.results.length < self.options.limit){
-            this.hasMore = false
-          }
+          this.hasMore = response.data.results.length >= this.options.limit;
+          
           this.items = this.items.concat(response.data.results);
           this.options.offset = this.items.length;
           this.loading = false;

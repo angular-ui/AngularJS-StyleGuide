@@ -103,7 +103,7 @@ module.controller( 'TaskForm', ($scope, task) => {
 module.factory( 'Task', (BaseObject, $http) => {
   class Task extends BaseObject {
     create() {
-      return $http.post('/api/tasks', this).then( (response) =>
+      return $http.post('/api/tasks', this).then( (response) => {
         this.id = response.data.id;
         return response.data;
       });

@@ -11,12 +11,8 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/Project/Projects.html',
     controller: 'Projects',
     resolve: {
-      projects: ($http, authenticatedUser, Project) => {
-        return $http.get('/api/projects', { params: { user_id: authenticatedUser.id } }).then( (response) => {
-          return response.data.map( (project) => {
-            return new Project(project);
-          });
-        });
+      projects: (authenticatedUser, Project) => {
+        return Project.list(authenticatedUser.id);
       }
     },
     // `breadcrumbs` resolved in `authenticated` state
@@ -58,10 +54,8 @@ module.config( ($stateProvider) => {
       }
     },
     resolve: {
-      project: ($http, $stateParams, Project) => {
-        return $http.get('/api/projects/' + $stateParams.id).then( (response) => {
-          return new Project(response.data);
-        });
+      project: ($stateParams, Project) => {
+        return Project.get($stateParams.projectId);
       }
     },
     onEnter: (project, breadcrumbs) => {
@@ -98,6 +92,21 @@ module.controller( 'ProjectForm', ($scope, project) => {
 
 module.factory('ProjectObject', (BaseObject, $http) => {
   class Project extends BaseObject {
+    
+    static list(userId) {
+      return $http.get('/api/projects', { params: { user_id: userId } }).then( (response) => {
+        return response.data.map( (project) => {
+          return new Project(project);
+        });
+      });
+    }
+    
+    static get(id) {
+      return $http.get('/api/projects/' + id).then( (response) => {
+        return new Project(response.data);
+      });
+    }
+    
 
     create() {
       return $http.post('/api/projects', this ).then( (response) => {

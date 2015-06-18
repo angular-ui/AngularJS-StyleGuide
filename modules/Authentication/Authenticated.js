@@ -20,6 +20,7 @@ module.config(function($stateProvider)
               return $q.reject( $state.go('login') );
             });
         },
+        // layout variable for breadcrumb nav (populated by children)
         breadcrumbs: () => {
           return [];
         }

@@ -12,12 +12,8 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/Task/Tasks.html',
     controller: 'Tasks',
     resolve: {
-      tasks: (Task, $http, project) => {
-        return $http.get('/api/tasks', { params: { project_id: project.id } }).then( (response) => {
-          return response.data.map( (task) => {
-            return new Task(task);
-          });
-        });
+      tasks: (Task, project) => {
+        return Task.list(project.id);
       }
     },
     // breadcrumbs resolved in authenticated state
@@ -102,6 +98,16 @@ module.controller( 'TaskForm', ($scope, task) => {
 
 module.factory( 'Task', (BaseObject, $http) => {
   class Task extends BaseObject {
+    
+    static list(projectId) {
+      return $http.get('/api/tasks', { params: { project_id: projectId } }).then( (response) => {
+        return response.data.map( (task) => {
+          return new Task(task);
+        });
+      });
+    }
+    
+    
     create() {
       return $http.post('/api/tasks', this).then( (response) => {
         this.id = response.data.id;

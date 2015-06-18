@@ -12,7 +12,7 @@
  *     },
  *     // Queries the initial load
  *     projects: function(paginator) {
- *       return paginator.more();
+ *       return paginator.next();
  *     }
  *   }
  * 
@@ -24,7 +24,7 @@
  *       });
  *     },
  *     tasks: function(taskPaginator) {
- *       return taskPaginator.more();
+ *       return taskPaginator.next();
  *     }
  *   }
  */
@@ -43,7 +43,7 @@ angular.module('App').factory('Paginator', function($q){
       }, options);
     }
     
-    more() {
+    next() {
       if (this.hasMore) {
         this.loading = true;
         

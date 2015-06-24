@@ -52,6 +52,7 @@ angular.module('App').factory('Paginator', function($q){
 
             this.items = this.items.concat(response.data.results);
             this.options.offset = this.items.length;
+
             return this.items;
           })
           .finally(() => this.loading = false);

@@ -74,7 +74,7 @@ module.factory( 'User', (BaseObject, $http) => {
   class User extends BaseObject {
     static list() {
       return $http.get('/api/users')
-        .then( (response) => response.data.map(User.fromJSON));
+        .then( (response) => response.data.map(User.new));
     }
 
 

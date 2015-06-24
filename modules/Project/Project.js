@@ -52,11 +52,11 @@ module.config( ($stateProvider) => {
     resolve: {
       project: ($stateParams, Project) => Project.get($stateParams.projectId)
     },
-    onEnter: (project, breadcrumbs) => {
+    onEnter: function(project, breadcrumbs) {
       project.open();
       breadcrumbs.push({ label: project.name, sref: 'project' }); // Params inferred when going up
     },
-    onExit: (project, breadcrumbs) => {
+    onExit: function(project, breadcrumbs) {
       project.close();
       breadcrumbs.pop();
     }
@@ -88,11 +88,11 @@ module.factory('ProjectObject', (BaseObject, $http) => {
   class Project extends BaseObject {
     static list(userId) {
       return $http.get('/api/projects', { params: { user_id: userId } })
-        .then( (response) => response.data.map(Project.fromJSON));
+        .then( (response) => response.data.map(Project.new));
     }
 
     static get(id) {
-      return $http.get('/api/projects/' + id)
+      return $http.get(`/api/projects/${id}`)
         .then( (response) => new Project(response.data));
     }
 
@@ -106,7 +106,7 @@ module.factory('ProjectObject', (BaseObject, $http) => {
     }
 
     update() {
-      return $http.put('/api/projects/' + this.id, this );
+      return $http.put(`/api/projects/${this.id}`, this);
     }
   }
 

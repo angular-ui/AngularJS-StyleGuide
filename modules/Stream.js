@@ -12,9 +12,7 @@ module.factory('Stream', () => {
 
       // unsubscriber
       return () => {
-        this.listeners = this.listeners.filter( (item) => {
-          return item !== listener;
-        });
+        this.listeners = this.listeners.filter( (item) => item !== listener );
       };
     }
 

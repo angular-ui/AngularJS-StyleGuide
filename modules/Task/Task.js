@@ -54,11 +54,11 @@ module.config( ($stateProvider) => {
     resolve: {
       task: (project, $stateParams) => project.getTask($stateParams.taskId)
     },
-    onEnter: (task, breadcrumbs) => {
+    onEnter: function(task, breadcrumbs) {
       task.open();
       breadcrumbs.push({ label: task.name, sref: 'task' });
     },
-    onExit: (task, breadcrumbs) => {
+    onExit: function(task, breadcrumbs) {
       task.close();
       breadcrumbs.pop();
     }
@@ -94,15 +94,16 @@ module.factory( 'Task', (BaseObject, $http) => {
   class Task extends BaseObject {
     static list(projectId) {
       return $http.get('/api/tasks', { params: { project_id: projectId } })
-        .then( (response) => response.data.map(Task.fromJSON));
+        .then( (response) => response.data.map(Task.new));
     }
 
 
     create() {
-      return $http.post('/api/tasks', this).then( (response) => {
-        this.id = response.data.id;
-        return response.data;
-      });
+      return $http.post('/api/tasks', this)
+        .then( (response) => {
+          this.id = response.data.id;
+          return response.data;
+        });
     }
 
     update() {

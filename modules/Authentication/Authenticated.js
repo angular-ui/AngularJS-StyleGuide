@@ -17,13 +17,17 @@ module.config( ($stateProvider) => {
           .then(
             (response) => new User(response.data),
             // must return a rejected promise in order to stay in rejected-mode
-            (error) => $q.reject( $state.go('login') )
+            (error) => $q.reject($state.go('login'))
           );
       },
       // layout variable for breadcrumb nav (populated by children)
       breadcrumbs: () => []
     },
-    onEnter: (user) => user.open(),
-    onExit: (user) => user.close()
+    onEnter: function(user) {
+      user.open();
+    },
+    onExit: function(user) {
+      user.close();
+    }
   });
 });

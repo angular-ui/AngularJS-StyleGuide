@@ -5,7 +5,7 @@ module.factory('BaseObject', () => {
     /*
     Creates a new instance from JSON.
     */
-    static fromJSON(data) {
+    static new(data) {
       return new this(data);
     }
 

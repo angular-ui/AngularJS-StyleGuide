@@ -1,8 +1,7 @@
 var module = angular.module('App', ['ui.router', 'App.Authentication', 'App.Guest']);
 
 
-module.config( ($urlRouterProvider, $rootScope) => {
-
+module.config(function($urlRouterProvider, $rootScope) {
     // Default URL if no matches
     $urlRouterProvider.otherwise('/projects');
 
@@ -10,5 +9,4 @@ module.config( ($urlRouterProvider, $rootScope) => {
     $rootScope.$on('stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
     	console.log( event, toState, toParams, fromState, fromParams, error );
     });
-
 });

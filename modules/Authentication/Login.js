@@ -29,7 +29,9 @@ module.config( ($stateProvider) => {
         controller: 'Login',
       })
     },
-    onExit: (modal) => modal.close()
+    onExit: function(modal) {
+      modal.close();
+    }
   });
 });
 
@@ -45,7 +47,6 @@ module.controller('Login', ($scope, UserObject, Authentication, user, redirect) 
 
   $scope.login = () => {
     Authentication.login($scope.user, $scope.rememberMe)
-    .then( redirect )
-    .catch( (response) => $scope.error = response );
+      .then( redirect, (response) => $scope.error = response);
   };
 });

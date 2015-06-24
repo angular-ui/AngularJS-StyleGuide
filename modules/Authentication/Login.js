@@ -11,7 +11,7 @@ var previousLocation;
 
 var module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']);
 
-module.config( ($stateProvider) => {
+module.config(function($stateProvider) {
   $stateProvider.state('login', {
     parent: 'guest',
     url: '/login',
@@ -29,13 +29,13 @@ module.config( ($stateProvider) => {
         controller: 'Login',
       })
     },
-    onExit: function(modal) {
+    onExit(modal) {
       modal.close();
     }
   });
 });
 
-module.run( ($rootScope, $location) => {
+module.run(function($rootScope, $location) {
   $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     // TODO: Change to state code
     previousLocation = $location.path();

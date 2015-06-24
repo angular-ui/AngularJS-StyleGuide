@@ -7,7 +7,7 @@ Most of the actual app is located under here. This abstract module primarily tac
 
 var module = angular.module('App.Authenticated', ['ui.router']);
 
-module.config( ($stateProvider) => {
+module.config(function($stateProvider) {
   $stateProvider.state('authenticated', {
     templateUrl: 'modules/Authenticated/Authenticated.html',
     abstract: true,
@@ -23,10 +23,10 @@ module.config( ($stateProvider) => {
       // layout variable for breadcrumb nav (populated by children)
       breadcrumbs: () => []
     },
-    onEnter: function(user) {
+    onEnter(user) {
       user.open();
     },
-    onExit: function(user) {
+    onExit(user) {
       user.close();
     }
   });

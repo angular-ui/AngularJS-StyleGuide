@@ -5,7 +5,6 @@ Task Module
 var module = angular.module('App.Task', ['App.Project', 'ui.router']);
 
 module.config( ($stateProvider) => {
-
   $stateProvider.state( 'tasks', {
     parent: 'project',
     url: '/tasks',
@@ -38,6 +37,7 @@ module.config( ($stateProvider) => {
       breadcrumbs.pop();
     }
   });
+
   $stateProvider.state( 'task', {
     parent: 'tasks',
     url: '/:taskId', // /projects/:projectId/tasks/:taskId (state must be defined AFTER /new)
@@ -74,7 +74,6 @@ module.controller( 'Tasks', ($scope, tasks, project) => {
   $scope.tasks = tasks;
   $scope.tasks = project;
 });
-
 
 module.controller( 'Task', ($scope, task) => {
   $scope.task = task;

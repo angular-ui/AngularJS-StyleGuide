@@ -4,7 +4,7 @@ Project Module
 */
 var module = angular.module('App.Project', ['ui.router', 'ui.bootstrap'])
 
-module.config( ($stateProvider) => {
+module.config(function($stateProvider) {
   $stateProvider.state( 'projects', {
     parent: 'authenticated',
     url: '/projects',
@@ -14,10 +14,10 @@ module.config( ($stateProvider) => {
       projects: (authenticatedUser, Project) => Project.list(authenticatedUser.id)
     },
     // `breadcrumbs` resolved in `authenticated` state
-    onEnter: function(breadcrumbs) {
+    onEnter(breadcrumbs) {
       breadcrumbs.push({ label: 'Projects', sref: 'projects' });
     },
-    onExit: function(breadcrumbs) {
+    onExit(breadcrumbs) {
       breadcrumbs.pop();
     },
   });
@@ -29,10 +29,10 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/Project/Form.html',
     controller: 'ProjectForm',
     // `breadcrumbs` resolved in `authenticated` state
-    onEnter: function(breadcrumbs) {
+    onEnter(breadcrumbs) {
       breadcrumbs.push({ label: 'New', sref: 'projects.new' });
     },
-    onExit: function(breadcrumbs) {
+    onExit(breadcrumbs) {
       breadcrumbs.pop();
     }
   });
@@ -52,11 +52,11 @@ module.config( ($stateProvider) => {
     resolve: {
       project: ($stateParams, Project) => Project.get($stateParams.projectId)
     },
-    onEnter: function(project, breadcrumbs) {
+    onEnter(project, breadcrumbs) {
       project.open();
       breadcrumbs.push({ label: project.name, sref: 'project' }); // Params inferred when going up
     },
-    onExit: function(project, breadcrumbs) {
+    onExit(project, breadcrumbs) {
       project.close();
       breadcrumbs.pop();
     }

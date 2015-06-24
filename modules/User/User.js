@@ -7,7 +7,7 @@ ui.validate is part of angular-ui-validate
 */
 var module = angular.module('App.User', ['ui.router', 'ui.validate']);
 
-module.config( ($stateProvider) => {
+module.config(function($stateProvider) {
   $stateProvider.state( 'users', {
     parent: 'admin',
     url: '/users',

@@ -14,9 +14,7 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/User/Users.html',
     controller: 'Users',
     resolve: {
-      users: (User) => {
-        return User.list();
-      }
+      users: (User) => User.list()
     }
   });
 
@@ -26,12 +24,8 @@ module.config( ($stateProvider) => {
     url: '/register',
     resolve: {
       // shared & accessible from all steps (and their controllers if necessary)
-      user: (User) => {
-        return new User();
-      },
-      wizard: (user, RegistrationWizard) => {
-        return new RegistrationWizard(user);
-      }
+      user: (User) => new User(),
+      wizard: (user, RegistrationWizard) => new RegistrationWizard(user)
     },
     templateUrl: 'modules/User/Register.html',
     controller: 'UserForm'
@@ -61,7 +55,7 @@ module.config( ($stateProvider) => {
       // prevent accessing step prematurely
       validate: (wizard, $state) => {
         if (!wizard.stepsCompleted(2))
-          $state.go('register.step2')
+          $state.go('register.step2');
       }
     }
   });
@@ -78,20 +72,16 @@ module.controller( 'UserForm', ($scope, user, wizard) => {
 
 module.factory( 'User', (BaseObject, $http) => {
   class User extends BaseObject {
-    
     static list() {
-      return $http.get('/api/users').then( (response) => {
-        return response.data.map( (user) => {
-          return new User(user);
-        });
-      });
+      return $http.get('/api/users')
+        .then( (response) => response.data.map(User.fromJSON));
     }
-    
-    
+
+
     // checks validity of the property (probably should be in BaseObject)
     validate(property) {
-      if (!rules[property])
-          return true
+      if (!User.rules[property])
+        return true;
 
       var pattern = new RegExp(User.rules[property]);
       return pattern.test(this[property]);

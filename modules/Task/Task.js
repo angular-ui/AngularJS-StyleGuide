@@ -2,7 +2,7 @@
 Task Module
 ============
 */
-var module = angular.module('App.Task', ['App.Project', 'ui.router'])
+var module = angular.module('App.Task', ['App.Project', 'ui.router']);
 
 module.config( ($stateProvider) => {
 
@@ -12,9 +12,7 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/Task/Tasks.html',
     controller: 'Tasks',
     resolve: {
-      tasks: (Task, project) => {
-        return Task.list(project.id);
-      }
+      tasks: (Task, project) => Task.list(project.id)
     },
     // breadcrumbs resolved in authenticated state
     onEnter: function(breadcrumbs) {
@@ -28,9 +26,7 @@ module.config( ($stateProvider) => {
   $stateProvider.state( 'tasks.new', {
     url: '/new', // /projects/:projectId/tasks/new (state must be defined BEFORE /:taskId)
     resolve: {
-      task: (project) => {
-        return project.newTask();
-      }
+      task: (project) => project.newTask()
     },
     templateUrl: 'modules/Task/Form.html',
     controller: 'TaskForm',
@@ -56,9 +52,7 @@ module.config( ($stateProvider) => {
       }
     },
     resolve: {
-      task: (project, $stateParams) => {
-        return project.getTask($stateParams.taskId);
-      }
+      task: (project, $stateParams) => project.getTask($stateParams.taskId)
     },
     onEnter: (task, breadcrumbs) => {
       task.open();
@@ -98,16 +92,12 @@ module.controller( 'TaskForm', ($scope, task) => {
 
 module.factory( 'Task', (BaseObject, $http) => {
   class Task extends BaseObject {
-    
     static list(projectId) {
-      return $http.get('/api/tasks', { params: { project_id: projectId } }).then( (response) => {
-        return response.data.map( (task) => {
-          return new Task(task);
-        });
-      });
+      return $http.get('/api/tasks', { params: { project_id: projectId } })
+        .then( (response) => response.data.map(Task.fromJSON));
     }
-    
-    
+
+
     create() {
       return $http.post('/api/tasks', this).then( (response) => {
         this.id = response.data.id;
@@ -116,8 +106,9 @@ module.factory( 'Task', (BaseObject, $http) => {
     }
 
     update() {
-      return $http.put('/api/tasks/' + this.id);
+      return $http.put(`/api/tasks/${this.id}`, this);
     }
   }
+
   return Task;
 });

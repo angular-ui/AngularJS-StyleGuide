@@ -1,7 +1,6 @@
 var module = angular.module('App');
 
 module.factory('Stream', () => {
-
   class Stream {
     constructor() {
       this.listeners = [];
@@ -13,23 +12,19 @@ module.factory('Stream', () => {
 
       // unsubscriber
       return () => {
-        this.listeners = this.listeners.filter( (item) => {
-          return item !== listener;
-        });
+        this.listeners = this.listeners.filter( (item) => item !== listener );
       };
     }
 
     push(data) {
       // allow listeners to modify the data (use sparingly)
-      changeData = (newValue) => {
-        data = newValue;
-      }
+      let changeData = (newValue) => data = newValue;
 
-      for (listener in this.listeners) {
+      for (let listener in this.listeners) {
         data = this.listeners[listener](data, changeData) || data;
       }
 
-      for (childStream in this.children) {
+      for (let childStream in this.children) {
         this.children[childStream].push(data);
       }
     }
@@ -45,9 +40,7 @@ module.factory('Stream', () => {
 
       // unsubscriber
       return () => {
-        this.children = this.children.filter( (child) => {
-          stream != child;
-        });
+        this.children = this.children.filter( (child) => stream !== child);
       };
     }
   }

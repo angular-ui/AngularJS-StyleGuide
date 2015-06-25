@@ -2,19 +2,16 @@
 Task Module
 ============
 */
-var module = angular.module('App.Task', ['App.Project', 'ui.router'])
+var module = angular.module('App.Task', ['App.Project', 'ui.router']);
 
 module.config( ($stateProvider) => {
-
   $stateProvider.state( 'tasks', {
     parent: 'project',
     url: '/tasks',
     templateUrl: 'modules/Task/Tasks.html',
     controller: 'Tasks',
     resolve: {
-      tasks: (Task, project) => {
-        return Task.list(project.id);
-      }
+      tasks: (Task, project) => Task.list(project.id)
     },
     // breadcrumbs resolved in authenticated state
     onEnter: function(breadcrumbs) {
@@ -28,9 +25,7 @@ module.config( ($stateProvider) => {
   $stateProvider.state( 'tasks.new', {
     url: '/new', // /projects/:projectId/tasks/new (state must be defined BEFORE /:taskId)
     resolve: {
-      task: (project) => {
-        return project.newTask();
-      }
+      task: (project) => project.newTask()
     },
     templateUrl: 'modules/Task/Form.html',
     controller: 'TaskForm',
@@ -42,6 +37,7 @@ module.config( ($stateProvider) => {
       breadcrumbs.pop();
     }
   });
+
   $stateProvider.state( 'task', {
     parent: 'tasks',
     url: '/:taskId', // /projects/:projectId/tasks/:taskId (state must be defined AFTER /new)
@@ -56,15 +52,13 @@ module.config( ($stateProvider) => {
       }
     },
     resolve: {
-      task: (project, $stateParams) => {
-        return project.getTask($stateParams.taskId);
-      }
+      task: (project, $stateParams) => project.getTask($stateParams.taskId)
     },
-    onEnter: (task, breadcrumbs) => {
+    onEnter: function(task, breadcrumbs) {
       task.open();
       breadcrumbs.push({ label: task.name, sref: 'task' });
     },
-    onExit: (task, breadcrumbs) => {
+    onExit: function(task, breadcrumbs) {
       task.close();
       breadcrumbs.pop();
     }
@@ -80,7 +74,6 @@ module.controller( 'Tasks', ($scope, tasks, project) => {
   $scope.tasks = tasks;
   $scope.tasks = project;
 });
-
 
 module.controller( 'Task', ($scope, task) => {
   $scope.task = task;
@@ -98,26 +91,24 @@ module.controller( 'TaskForm', ($scope, task) => {
 
 module.factory( 'Task', (BaseObject, $http) => {
   class Task extends BaseObject {
-    
     static list(projectId) {
-      return $http.get('/api/tasks', { params: { project_id: projectId } }).then( (response) => {
-        return response.data.map( (task) => {
-          return new Task(task);
-        });
-      });
+      return $http.get('/api/tasks', { params: { project_id: projectId } })
+        .then( (response) => response.data.map(Task.new));
     }
-    
-    
+
+
     create() {
-      return $http.post('/api/tasks', this).then( (response) => {
-        this.id = response.data.id;
-        return response.data;
-      });
+      return $http.post('/api/tasks', this)
+        .then( (response) => {
+          this.id = response.data.id;
+          return response.data;
+        });
     }
 
     update() {
-      return $http.put('/api/tasks/' + this.id);
+      return $http.put(`/api/tasks/${this.id}`, this);
     }
   }
+
   return Task;
 });

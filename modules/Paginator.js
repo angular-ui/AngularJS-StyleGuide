@@ -1,8 +1,8 @@
 /**
  * Paginator - Simple paginator utility example that abstracts logic in a controllable pattern
- * 
+ *
  * @param paginate {function} Query function that takes paginationOptions
- * 
+ *
  * @example
  *   resolve: {
  *     // Prepares the paginator
@@ -15,7 +15,7 @@
  *       return paginator.next();
  *     }
  *   }
- * 
+ *
  * @example
  *   resolve: {
  *     taskPaginator: function(Paginator, Task, $stateParams) {
@@ -29,9 +29,7 @@
  *   }
  */
 angular.module('App').factory('Paginator', function($q){
-
   class Paginator {
-    
     constructor(paginate, options) {
       this.paginate = paginate;
       this.items = [];
@@ -42,24 +40,26 @@ angular.module('App').factory('Paginator', function($q){
         offset: 0
       }, options);
     }
-    
+
     next() {
       if (this.hasMore) {
         this.loading = true;
-        
-        return this.paginate(this.options).then((response) => {
-          //If the results are less than the required limit then the results are finished
-          this.hasMore = response.data.results.length >= this.options.limit;
-          
-          this.items = this.items.concat(response.data.results);
-          this.options.offset = this.items.length;
-          return this.items;
-        }).finally(() => this.loading = false);
+
+        return this.paginate(this.options)
+          .then((response) => {
+            //If the results are less than the required limit then the results are finished
+            this.hasMore = response.data.results.length >= this.options.limit;
+
+            this.items = this.items.concat(response.data.results);
+            this.options.offset = this.items.length;
+
+            return this.items;
+          })
+          .finally(() => this.loading = false);
       } else {
         return $q.when(this.items);
       }
     }
-    
   }
 
   return Paginator;

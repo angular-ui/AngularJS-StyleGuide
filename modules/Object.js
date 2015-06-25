@@ -1,12 +1,17 @@
 var module = angular.module('App');
 
 module.factory('BaseObject', () => {
-
   class BaseObject {
-    constructor(data = {}) {
-      for (property in data) {
-        this[property] = data[property];
-      }
+    /*
+    Creates a new instance from JSON.
+    */
+    static new(data) {
+      return new this(data);
+    }
+
+
+    constructor(data) {
+      Object.assign(this, data);
     }
 
     /*

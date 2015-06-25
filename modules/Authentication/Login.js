@@ -9,16 +9,14 @@ $modal is part of ui.bootstrap
 // Tracks the previous location and allows you to redirect back to that location
 var previousLocation;
 
-var module = angular.module('App.Login', ['ui.router', 'ui.bootstrap'])
+var module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']);
 
-module.config( ($stateProvider) => {
+module.config(function($stateProvider) {
   $stateProvider.state('login', {
     parent: 'guest',
     url: '/login',
     resolve: {
-      user: (User) => {
-        return new User();
-      },
+      user: (User) => new User(),
       redirect: ($location) => {
         return () => {
           // Note we're returning a function to be called later, that has the redirect info pre-filled
@@ -26,23 +24,21 @@ module.config( ($stateProvider) => {
           $location.path( previousLocation );
         };
       },
-      modal: ($modal) => {
-        return $modal.open({
-          templateUrl: "modules/Authentication/Login.html",
-          controller: 'Login',
-        });
-      }
+      modal: ($modal) => $modal.open({
+        templateUrl: 'modules/Authentication/Login.html',
+        controller: 'Login',
+      })
     },
-    onExit: (modal) => {
+    onExit(modal) {
       modal.close();
     }
   });
 });
 
-module.run( ($rootScope, $location) => {
+module.run(function($rootScope, $location) {
   $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     // TODO: Change to state code
-    previousLocation = $location.path()
+    previousLocation = $location.path();
   });
 });
 
@@ -50,10 +46,7 @@ module.controller('Login', ($scope, UserObject, Authentication, user, redirect) 
   $scope.user = user;
 
   $scope.login = () => {
-    Authentication.login($scope.user, $scope.rememberMe).then( () => {
-      redirect();
-    }, (response) => {
-      $scope.error = response;
-    });
+    Authentication.login($scope.user, $scope.rememberMe)
+      .then( redirect, (response) => $scope.error = response);
   };
 });

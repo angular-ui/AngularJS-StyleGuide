@@ -12,7 +12,7 @@ module.factory('Stream', () => {
 
       // unsubscriber
       return () => {
-        this.listeners = this.listeners.filter( (item) => item !== listener );
+        this.listeners.splice( this.listeners.indexOf(listener), 1 );
       };
     }
 
@@ -40,7 +40,7 @@ module.factory('Stream', () => {
 
       // unsubscriber
       return () => {
-        this.children = this.children.filter( (child) => stream !== child);
+        this.children.splice( this.children.indexOf(stream), 1 );
       };
     }
   }

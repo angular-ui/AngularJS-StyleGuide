@@ -93,7 +93,7 @@ module.factory( 'Task', (BaseObject, $http) => {
   class Task extends BaseObject {
     static list(projectId) {
       return $http.get('/api/tasks', { params: { project_id: projectId } })
-        .then( (response) => response.data.map(Task.new));
+        .then( (response) => response.data.map( task => new Task(task) ) );
     }
 
 

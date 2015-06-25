@@ -88,7 +88,7 @@ module.factory('ProjectObject', (BaseObject, $http) => {
   class Project extends BaseObject {
     static list(userId) {
       return $http.get('/api/projects', { params: { user_id: userId } })
-        .then( (response) => response.data.map(Project.new));
+        .then( (response) => response.data.map( project => new Project(project) ) );
     }
 
     static get(id) {

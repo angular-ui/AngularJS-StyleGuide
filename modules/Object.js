@@ -2,17 +2,6 @@ var module = angular.module('App');
 
 module.factory('BaseObject', () => {
   class BaseObject {
-    /**
-     * BaseObject.new() - a wrapper for `new BoseObject()` for use in callbacks
-     * @param  {hash} data Initialization data
-     * @return {object}    The newly created object
-     * @example
-     * 	$http.get('/api/items').then( response => response.data.map(Item.new, Item) )
-     */
-    static new(data) {
-      return new this(data);
-    }
-
 
     constructor(data) {
       Object.assign(this, data);

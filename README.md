@@ -33,10 +33,16 @@ x.prototype.method = function(){}
 ```
 **ES6**
 ```js
+// `this` is bound to OUTER scope
 ( x, y, z ) => {
-  this.whatever // `this` is bound to OUTER scope
-  z // last line of functions are always returned
+  this.whatever;
 }
+// single-line functions without brackets returns their expression
+( x ) => x.y
+// single-argument signatures don't need parenthesis
+response => response.data
+
+
 
 class x {
   constructor(z) {

@@ -7,7 +7,7 @@ module.factory('BaseObject', () => {
      * @param  {hash} data Initialization data
      * @return {object}    The newly created object
      * @example
-     * 	$http.get('/api/items').then( response => response.data.map(Item.new) )
+     * 	$http.get('/api/items').then( response => response.data.map(Item.new, Item) )
      */
     static new(data) {
       return new this(data);

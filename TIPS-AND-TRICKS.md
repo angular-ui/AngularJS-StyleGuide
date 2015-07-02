@@ -89,3 +89,12 @@ The only time scope inheritence is good is when working with directives. Directi
 If your directive is getting a bit unwieldy (assuming this is an [open-sourceable directive](#if-you-cant-open-source-your-directives-they-probably-shouldnt-exist)) remember that you can use a directive's `require` attribute to access the controller of another directive. Think of this as a directives **externally accessible api**. This is where you can concretely define methods and attributes that can be accessed by other directives, instead of relying on the scope. You can then package sub-features of a directive and can pick and choose which ones to load when you build your templates.
 Example:
 `<div ui-grid ui-grid-sortable ui-grid-paginate>`
+
+#### Use the object to manage _data_ state
+Instead of putting heavy load on _view_ state flags that describe how things should _look_, use grammar that
+describes the verb-like state of the data or action itself. This can then be repurposed in multiple ways in
+in the view as to the visual representation, and is not tied to visual information.
+
+Instead of `$scope.showSpinner` or `$scope.loading` use `task.uploading` or `project.saving` which could be rendered as a spinner, form, panel, whatever. The point is the **state flag is agnostic about the visual implementation**.
+
+[Example of clean state flag management](https://github.com/ProLoser/AngularJS-ORM/tree/7eee7eac0573bb8d53beef3cc2e11bb75cfe967f#L100-L133)

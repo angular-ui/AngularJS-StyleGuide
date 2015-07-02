@@ -39,8 +39,6 @@ angular.module('App').factory('Paginator', function($q){
       this.items = [];
       this.hasMore = true;
       this.loading = null;
-      
-      this.next();
     }
 
     next() {

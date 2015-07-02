@@ -110,7 +110,7 @@ module.factory( 'Task', (BaseObject, $http) => {
      * 
      */
     create() {
-      // wraps `this.uploading` in a promise that resolves immediately if it is `null` or waits
+      // wraps `this.uploading` in a promise that resolves immediately if it is `null` or waits for the promise
       return this.creating = $q.when(this.uploading)
         .then( () => $http.post('/api/tasks', this) ) // uploading callback
         .then( response => return Object.assign(this, response.data) ) // creating callback

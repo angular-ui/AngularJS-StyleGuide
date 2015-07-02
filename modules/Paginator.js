@@ -30,35 +30,50 @@ angular.module('App').factory('Paginator', function($q){
   class Paginator {
     constructor(paginate, options) {
       this.paginate = paginate;
-      this.items = [];
-      this.hasMore = true;
-      this.loading = false;
-      this.options = Object.assign({
-        limit: 20,
+      this.options = _.extend({
+        limit: 50,
         offset: 0
       }, options);
+      this.items = [];
+      this.hasMore = true;
+      this.loading = null;
+      
+      this.next();
     }
 
     next() {
-      if (this.hasMore) {
-        this.loading = true;
+      if (!this.hasMore) return $q.when();
+      if (this.loading) return this.loading;
 
-        return this.paginate(this.options)
-          .then((response) => {
-            //If the results are less than the required limit then the results are finished
-            this.hasMore = response.data.results.length >= this.options.limit;
+      return this.loading = this.paginate(this.options).then( response => {
+        if (response.data.results.length < this.options.limit)
+          this.hasMore = false;
 
-            this.items = this.items.concat(response.data.results);
-            this.options.offset = this.items.length;
-
-            return this.items;
-          })
-          .finally(() => this.loading = false);
-      } else {
-        return $q.when(this.items);
-      }
+        this.items.push.apply(this.items, response.data.results);
+        this.options.offset = this.items.length;
+        this.loading = null;
+        return this.items;
+      });
     }
-  }
 
+    /**
+     * paginator.paginate - paginator function
+     *
+     * @param  {url|function} paginate
+     *   If a url is provided, a wrapper for $http.get() is created
+     *   If a callback is provided, use that instead
+     */
+    set paginate(paginate) {
+      if (angular.isString(paginate))
+        this._paginate = (paginateOptions) => $http.get(paginate, { params: paginateOptions });
+      else
+        this._paginate = paginate;
+    }
+
+    get paginate() {
+      return this._paginate;
+    }
+
+  }
   return Paginator;
 });

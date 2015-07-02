@@ -21,7 +21,7 @@
  *     taskPaginator: function(Paginator, Task, $stateParams) {
  *       return new Paginator( (paginationOptions) => Task.list($stateParams.projectId, paginationOptions) );
  *       // or
- *       return new Paginator( Task.list.bind(Task), { projectId: $stateParams.projectId } );
+ *       return new Paginator( Task.list, { projectId: $stateParams.projectId } );
  *     },
  *     tasks: function(taskPaginator) {
  *       return taskPaginator.next();

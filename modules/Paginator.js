@@ -45,15 +45,16 @@ angular.module('App').factory('Paginator', function($q){
       if (!this.hasMore) return $q.when();
       if (this.loading) return this.loading;
 
-      return this.loading = this.paginate(this.options).then( response => {
-        if (response.data.results.length < this.options.limit)
-          this.hasMore = false;
-
-        this.items.push.apply(this.items, response.data.results);
-        this.options.offset = this.items.length;
-        this.loading = null;
-        return this.items;
-      });
+      return this.loading = this.paginate(this.options)
+        .then( response => {
+          if (response.data.results.length < this.options.limit)
+            this.hasMore = false;
+  
+          this.items.push.apply(this.items, response.data.results);
+          this.options.offset = this.items.length;
+          this.loading = null;
+          return this.items;
+        });
     }
 
     /**

@@ -6,6 +6,8 @@ In today's code, it's sensible keep modules together and small. HTML, JS and CSS
 
 #### **If you can't open-source your directives, they probably shouldn't exist**  
 A lot of people will create what I refer to as 'one-off' directives. They should usually just be sub-states.
+If you create directives that are specific to your app's business logic, and aren't focused on purely UI visual implementation (regardless of data, application, etc) then you are too tightly coupling your business logic to your view. You are making it more difficult to quickly refactor your view or view structure. You have to track down where business logic is being executed or modified in multiple places. You start keeping track of data state and lifecycle and implementing things like events and streams because your view lifecycle isn't consistent with your data lifecycle.  
+Instead, 0 business logic in views. Rendering logic in views only. Publicly, reusable, agnostic, unopinionated, highly versatile/reusable view logic.
 
 #### **Don't do routing redirects inside services/factories**  
 Even though you have an Auth service, or something else, you should always have them bubble their results up to the top of the promise chain. Alway do routing from controllers or state definitions, otherwise people have to go diving through a deeply nested chain of service callbacks to figure out why they keep getting a redirect loop.

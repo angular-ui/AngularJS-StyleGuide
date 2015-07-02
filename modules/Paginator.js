@@ -19,9 +19,7 @@
  * @example
  *   resolve: {
  *     taskPaginator: function(Paginator, Task, $stateParams) {
- *       return new Paginator(function(paginationOptions){
- *         return Task.list($stateParams.projectId, paginationOptions);
- *       });
+ *       return new Paginator( (paginationOptions) => Task.list($stateParams.projectId, paginationOptions) );
  *     },
  *     tasks: function(taskPaginator) {
  *       return taskPaginator.next();

@@ -28,8 +28,9 @@ module.factory('BaseObject', ($q) => {
      * Using `Promise.finally()` allows you to execute code on success OR fail withought affecting chaining
      */
     save() {
+      // set a (truthy) flag reference to the promise
       return this.saving = ( this.id ? this.update() : this.create() )
-        .finally( () => this.saving = null );
+        .finally( () => this.saving = null ); // flag cleanup (doesn't affect chaining)
     }
 
     /**
@@ -38,8 +39,9 @@ module.factory('BaseObject', ($q) => {
      * @note Use object.save() instead of calling this method directly
      */
     create() {
+      // set a (truthy) flag reference to the promise
       return this.creating = $q.when(this)
-        .finally( () => this.creating = null );
+        .finally( () => this.creating = null ); // flag cleanup (doesn't affect chaining)
     }
     
     /**
@@ -48,16 +50,18 @@ module.factory('BaseObject', ($q) => {
      * @note Use object.save() instead of calling this method directly
      */
     update() {
+      // set a (truthy) flag reference to the promise
       return this.updating = $q.when(this)
-        .finally( () => this.updating = null );
+        .finally( () => this.updating = null ); // flag cleanup (doesn't affect chaining)
     }
 
     /**
      * object.delete() - stubbed with example state flag updating
      */
     delete() {
+      // set a (truthy) flag reference to the promise
       return this.deleting = $q.when(this)
-        .finally( () => this.deleting = null );
+        .finally( () => this.deleting = null ); // flag cleanup (doesn't affect chaining)
     }
 
     /**

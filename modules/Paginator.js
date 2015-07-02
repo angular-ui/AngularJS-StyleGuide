@@ -8,7 +8,7 @@
  *     // Prepares the paginator
  *     paginator: function(Paginator, Project) {
  *       // Calls `Project.list(paginationOptions)`
- *       return new Paginator(Project.list, { limit: 50 });
+ *       return new Paginator(Project.list.bind(Project), { limit: 50 });
  *     },
  *     // Queries the initial load
  *     projects: function(paginator) {

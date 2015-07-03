@@ -50,7 +50,6 @@ angular.module('App').factory('Paginator', function($http, $q){
       }, options);
       this.items = [];
       this.hasMore = true;
-      this.loading = null;
     }
 
     next() {
@@ -63,8 +62,8 @@ angular.module('App').factory('Paginator', function($http, $q){
 
         this.items.push.apply(this.items, items);
         this.options.offset = this.items.length;
-        this.loading = null;
-        return this.getRelated(items);
+        return this.getRelated(items)
+          .finally( () => this.loading = null );
       });
     }
 

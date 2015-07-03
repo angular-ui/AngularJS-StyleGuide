@@ -41,9 +41,11 @@ angular.module('App').factory('Paginator', function($http, $q){
     constructor(paginate, options = {}, relatedHelpers = {}) {
       this.paginate = paginate;
       this.relatedHelpers = relatedHelpers;
-      this.related = _.mapValues(this.relatedHelpers, () => {} );
+      this.related = _.mapValues(this.relatedHelpers, () => {
+        return {};
+      });
       this.options = _.extend({
-        limit: 50,
+        limit: 20,
         offset: 0
       }, options);
       this.items = [];

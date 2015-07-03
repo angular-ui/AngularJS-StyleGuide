@@ -41,7 +41,7 @@ angular.module('App').factory('Paginator', function($http, $q){
     constructor(paginate, options = {}, relatedHelpers = {}) {
       this.paginate = paginate;
       this.relatedHelpers = relatedHelpers;
-      this.related = {};
+      this.related = _.mapValues(this.relatedHelpers, () => {} );
       this.options = _.extend({
         limit: 50,
         offset: 0
@@ -86,9 +86,8 @@ angular.module('App').factory('Paginator', function($http, $q){
      */
     getRelated(items = this.items) {
       return $q.all(_.mapValues(this.relatedHelpers, (helper, name) =>
-        helper(items).then( relatedItems =>
-          this.related[name] = _.extend(this.related[name] || {}, relatedItems)
-        )
+        helper(items)
+          .then( relatedItems => _.extend(this.related[name], relatedItems) )
       ));
     }
 
@@ -111,6 +110,6 @@ angular.module('App').factory('Paginator', function($http, $q){
     }
 
   }
-  
+
   return Paginator;
 });

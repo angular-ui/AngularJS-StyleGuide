@@ -63,6 +63,7 @@ angular.module('App').factory('Paginator', function($http, $q){
         this.items.push.apply(this.items, items);
         this.options.offset = this.items.length;
         return this.getRelated(items)
+          .then( related => this.items )
           .finally( () => this.loading = null );
       });
     }

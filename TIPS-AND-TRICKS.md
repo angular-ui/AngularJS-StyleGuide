@@ -48,7 +48,8 @@ $scope.person = person;
 $scope.save = function(){
   $scope.loading = true;
   person.save().then(() => {
-    $scope.loading = false
+    $scope.loading = false;
+    $state.go(...);
   });
 });
 ```

@@ -1,0 +1,27 @@
+{
+  "name": "AngularJS-ORM",
+  "version": "1.0.0",
+  "description": "AngularJS ORM - Scalable Architectuer Demo",
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-autoprefixer": "^2.2.0",
+    "gulp-babel": "^5.1.0",
+    "main-bower-files": "^2.7.0"
+  },
+  "scripts": {
+    "install": "bower install",
+    "test": "true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ProLoser/AngularJS-ORM.git"
+  },
+  "author": "Dean Sofer (ProLoser)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProLoser/AngularJS-ORM/issues"
+  },
+  "homepage": "https://github.com/ProLoser/AngularJS-ORM",
+  "devDependencies": {}
+}

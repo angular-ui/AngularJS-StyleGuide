@@ -1,7 +1,26 @@
+////
+// !!RECOMMEND WRITING YOUR OWN GULPFILE FROM SCRATCH!!
+//
+// Think of tasks as their actions and NOT what they act on.
+// Icons, fonts, images are separate groups, but share the same actions.
+//
+// 1. Configure Folder Paths for groups
+// 2. Setup global defaults and flags (default, `--prod`, `gulp watch`, `gulp build`)
+// 3. Create tasks
+//    3.1. Create wrapper (default) task
+//    3.2. Create variations of task with path+configuration passed to reusable generator
+//    3.3. Reusable task generator, configuration is abstracted and passed in
+////
+
 var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
     mainBowerFiles = require('main-bower-files'),
     del = require('del');
+
+
+////// PATH CONFIGURATIONS //////
+// NOTE: Refrane from configuring tasks here
+// NOTE: `watch` key is optional, falls back to `src`
 
 var paths = {
   clean: ['public/'],
@@ -52,6 +71,10 @@ var paths = {
   }
 };
 
+
+////// GLOBALS //////
+
+// `--prod` can be used on any task
 var isProduction = plugins.util.env.prod;
 
 gulp.task('default', ['build']);
@@ -60,6 +83,9 @@ if (isProduction)
   gulp.task('build', plugins.sequence('clean', ['static', 'html', 'styles', 'scripts'], 'rev'));
 else
   gulp.task('build', plugins.sequence('clean', ['static', 'html', 'styles', 'scripts']));
+  
+  
+////// WATCH //////
 
 gulp.task('watch', ['build'], function(){
   plugins.livereload.listen();

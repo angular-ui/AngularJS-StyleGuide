@@ -52,6 +52,24 @@ angular.module('App').factory('Paginator', function($http, $q){
       this.hasMore = true;
     }
 
+    /**
+     * paginator.paginate - paginator function
+     *
+     * @param  {url|function} paginate
+     *   If a url is provided, a wrapper for $http.get() is created
+     *   If a callback is provided, use that instead
+     */
+    set paginate(paginate) {
+      if (angular.isString(paginate))
+        this._paginate = (paginateOptions) => $http.get(paginate, { params: paginateOptions });
+      else
+        this._paginate = paginate;
+    }
+
+    get paginate() {
+      return this._paginate;
+    }
+
     next() {
       if (!this.hasMore) return $q.when();
       if (this.loading) return this.loading;
@@ -66,6 +84,20 @@ angular.module('App').factory('Paginator', function($http, $q){
           .then( related => this.items )
           .finally( () => this.loading = null );
       });
+    }
+
+    /**
+     * remove()
+     *
+     * Remove item from items
+     *
+     * @param  {index|object} item Reference to an object or the index
+     */
+    remove(item) {
+      if (!this.items[item])
+        item = this.items.indexOf(item);
+
+      this.items.splice(item, 1);
     }
 
     /**
@@ -91,24 +123,6 @@ angular.module('App').factory('Paginator', function($http, $q){
         helper(items)
           .then( relatedItems => _.extend(this.related[name], relatedItems) )
       ));
-    }
-
-    /**
-     * paginator.paginate - paginator function
-     *
-     * @param  {url|function} paginate
-     *   If a url is provided, a wrapper for $http.get() is created
-     *   If a callback is provided, use that instead
-     */
-    set paginate(paginate) {
-      if (angular.isString(paginate))
-        this._paginate = (paginateOptions) => $http.get(paginate, { params: paginateOptions });
-      else
-        this._paginate = paginate;
-    }
-
-    get paginate() {
-      return this._paginate;
     }
 
   }

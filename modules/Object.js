@@ -75,7 +75,6 @@ module.factory('BaseObject', ($q) => {
      */
     clone() {
       var constructor = Object.getPrototypeOf(this).constructor;
-      // TODO: add support for queries by passing parent(?)
       return new constructor(this);
     }
 

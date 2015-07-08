@@ -97,7 +97,8 @@ angular.module('App').factory('Paginator', function($http, $q){
       if (!this.items[item])
         item = this.items.indexOf(item);
 
-      this.items.splice(item, 1);
+      if(item !== -1)
+        this.items.splice(item, 1);
     }
 
     /**

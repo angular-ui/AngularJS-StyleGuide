@@ -39,17 +39,12 @@ angular.module('App').factory('Paginator', function($http, $q){
      *                                 of items and returns an indexed hash
      */
     constructor(paginate, options = {}, relatedHelpers = {}) {
+      this.resetOptions = options;
       this.paginate = paginate;
       this.relatedHelpers = relatedHelpers;
       this.related = _.mapValues(this.relatedHelpers, () => {
         return {};
       });
-      this.options = _.extend({
-        limit: 20,
-        offset: 0
-      }, options);
-      this.items = [];
-      this.hasMore = true;
     }
 
     /**
@@ -60,6 +55,7 @@ angular.module('App').factory('Paginator', function($http, $q){
      *   If a callback is provided, use that instead
      */
     set paginate(paginate) {
+      this.reset();
       if (angular.isString(paginate))
         this._paginate = (paginateOptions) => $http.get(paginate, { params: paginateOptions });
       else
@@ -68,6 +64,27 @@ angular.module('App').factory('Paginator', function($http, $q){
 
     get paginate() {
       return this._paginate;
+    }
+
+    /**
+     * reset()
+     *
+     * Clear items collection. Useful for preserving related data.
+     *
+     * @note If you want a hard reset of all related data, create a new Paginator
+     * 
+     * @param {object} [resetOptions]
+     *   Optional hash of options to reset with,
+     *   otherwise last reset options will be used
+     */
+    reset(resetOptions = this.resetOptions) {
+      this.resetOptions = resetOptions;
+      this.options = _.extend({
+        limit: 20,
+        offset: 0
+      }, resetOptions);
+      this.hasMore = true;
+      return this.items = [];
     }
 
     next() {
@@ -87,17 +104,29 @@ angular.module('App').factory('Paginator', function($http, $q){
     }
 
     /**
+     * add()
+     *
+     * Add item to this.items and populate related
+     *
+     * @param  {index|object} item Reference to an object or the index
+     */
+    add(item) {
+      this.items.unshift(item);
+      return this.getRelated([item]);
+    }
+
+    /**
      * remove()
      *
-     * Remove item from items
+     * Remove item from this.items
      *
      * @param  {index|object} item Reference to an object or the index
      */
     remove(item) {
       if (!this.items[item])
         item = this.items.indexOf(item);
-
-      if (!!~item) // trick I learned from jQuery source
+      
+      if (~item)
         this.items.splice(item, 1);
     }
 

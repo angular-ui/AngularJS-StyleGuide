@@ -97,7 +97,7 @@ angular.module('App').factory('Paginator', function($http, $q){
       if (!this.items[item])
         item = this.items.indexOf(item);
 
-      if(item !== -1)
+      if (!!~item) // trick I learned from jQuery source
         this.items.splice(item, 1);
     }
 

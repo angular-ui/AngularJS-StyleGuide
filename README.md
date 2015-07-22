@@ -18,7 +18,7 @@ The project demonstrates ways to **leverage ui-router to the greatest of it's ab
 The StyleGuide
 -------------
 
-#### Don't worry about src, css, view, controller, etc folders
+#### Don't focus on `src`, `css`, `view`, `controller`, `directives`
 In today's code, it's sensible keep modules together and small. HTML, JS and CSS are closely tied together, so we should organize projects that way.
 
 #### If you can't open-source your directives, they probably shouldn't exist

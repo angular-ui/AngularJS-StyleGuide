@@ -1,4 +1,4 @@
-StyleGuide
+The StyleGuide
 -------------
 
 #### **I don't use a src, css, view, controller, etc folders**  

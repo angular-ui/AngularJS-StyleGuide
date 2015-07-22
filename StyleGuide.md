@@ -1,4 +1,4 @@
-Tips / Tricks
+StyleGuide
 -------------
 
 #### **I don't use a src, css, view, controller, etc folders**  

@@ -117,4 +117,4 @@ in the view as to the visual representation, and is not tied to visual informati
 
 Instead of `$scope.showSpinner` or `$scope.loading` use `task.uploading` or `project.saving` which could be rendered as a spinner, form, panel, whatever. The point is the **state flag is agnostic about the visual implementation**.
 
-[Example of clean state flag management](https://github.com/ProLoser/AngularJS-ORM/tree/7eee7eac0573bb8d53beef3cc2e11bb75cfe967f#L100-L133)
+[Example of clean state flag management](modules/Task/Task.js#L100-L138)

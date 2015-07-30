@@ -13,15 +13,16 @@ module.factory('ProjectObject', (BaseObject, $http) => {
 
 
     create() {
-      return $http.post('/api/projects', this )
+      return this.cache('creating', () => $http.post('/api/projects', this )
         .then( (response) => {
           this.id = response.data.id;
           return response.data;
-        });
+        })
+      );
     }
 
     update() {
-      return $http.put(`/api/projects/${this.id}`, this);
+      return this.cache('updating', () => $http.put(`/api/projects/${this.id}`, this) );
     }
   }
 

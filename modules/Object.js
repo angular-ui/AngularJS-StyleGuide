@@ -31,10 +31,11 @@ module.factory('BaseObject', ($q) => {
      * @param {boolean} [permanent] If the cache should be removed upon completion (default:false)
      */
     cache(name, callback, permanent = false) {
-      // sets (truthy) flag reference to promise + avoids redundant calls
+      // if promise already present (in progress) then return it instead
       if (this[name])
         return this[name];
       
+      // sets (truthy) flag reference to promise + avoids redundant calls
       return this[name] = callback()
         // flag cleanup (doesn't affect chaining)
         .finally( () => {

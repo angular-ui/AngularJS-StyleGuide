@@ -32,13 +32,15 @@ module.factory('BaseObject', ($q) => {
      */
     cache(name, callback, permanent = false) {
       // sets (truthy) flag reference to promise + avoids redundant calls
-      return this[name] || ( this[name] = $q.when(callback())
+      if (this[name])
+        return this[name];
+      
+      return this[name] = callback()
         // flag cleanup (doesn't affect chaining)
         .finally( () => {
           if (!permanent)
             this[name] = null;
-        })
-      );
+        });
     }
 
     /**

@@ -20,6 +20,25 @@ module.factory('BaseObject', ($q) => {
      * Unsubscribe unnecessary overhead
      */
     close() {}
+    
+    /**
+     * Prevents parallel queries and provides a stateful flag for view rendering
+     * 
+     * Also allows you to permanently store cache to prevent any subsequent calls
+     * 
+     * @param {string} name         Name of property flag to use for caching the promise
+     * @param {function} callback   Executes the query and returns a promise
+     * @param {boolean} [permanent] If the cache should be removed upon completion (default:false)
+     */
+    cache(name, callback, permanent = false) {
+      // sets (truthy) flag reference to promise + avoids redundant calls
+      return this[name] || this[name] = callback()
+        // flag cleanup (doesn't affect chaining)
+        .finally( () => {
+          if (!permanent)
+            this[name] = null;
+        });
+    }
 
     /**
      * object.save() - Convenience wrapper
@@ -28,9 +47,7 @@ module.factory('BaseObject', ($q) => {
      * Using `Promise.finally()` allows you to execute code on success OR fail withought affecting chaining
      */
     save() {
-      // sets (truthy) flag reference to promise + avoids redundant calls
-      return this.saving = this.saving || ( this.id ? this.update() : this.create() )
-        .finally( () => this.saving = null ); // flag cleanup (doesn't affect chaining)
+      return this.cache('saving', () => this.id ? this.update() : this.create() );
     }
 
     /**
@@ -39,9 +56,7 @@ module.factory('BaseObject', ($q) => {
      * @note Use object.save() instead of calling this method directly
      */
     create() {
-      // sets (truthy) flag reference to promise + avoids redundant calls
-      return this.creating = this.creating || $q.when(this)
-        .finally( () => this.creating = null ); // flag cleanup (doesn't affect chaining)
+      return this.cache('creating', () => $q.when(this) );
     }
     
     /**
@@ -50,18 +65,14 @@ module.factory('BaseObject', ($q) => {
      * @note Use object.save() instead of calling this method directly
      */
     update() {
-      // sets (truthy) flag reference to promise + avoids redundant calls
-      return this.updating = this.updating || $q.when(this)
-        .finally( () => this.updating = null ); // flag cleanup (doesn't affect chaining)
+      return this.cache('updating', () => $q.when(this) );
     }
 
     /**
      * object.delete() - stubbed with example state flag updating
      */
     delete() {
-      // sets (truthy) flag reference to promise + avoids redundant calls
-      return this.deleting = this.deleting || $q.when(this)
-        .finally( () => this.deleting = null ); // flag cleanup (doesn't affect chaining)
+      return this.cache('deleting', () => $q.when(this) );
     }
 
     /**

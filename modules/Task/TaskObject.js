@@ -21,18 +21,20 @@ module.factory( 'Task', (BaseObject, $http) => {
      */
     create() {
       // wraps `this.uploading` in a promise that resolves immediately if it is `null` or waits for the promise
-      return this.creating = $q.when(this.uploading)
+      return this.cache('creating', () => $q.when(this.uploading)
         .then( () => $http.post('/api/tasks', this) ) // uploading callback
         .then( response => return Object.assign(this, response.data) ) // creating callback
-        .finally( () => this.creating = null ); // state cleanup (doesn't affect chaining)
+        .finally( () => this.creating = null ) // state cleanup (doesn't affect chaining)
+      );
     }
 
     update() {
       // wraps `this.uploading` in a promise that resolves immediately if it is `null` or waits for the promise
-      return this.updating = $q.when(this.uploading)
+      return this.cache('updating', () => $q.when(this.uploading)
         .then( () => $http.post(`/api/tasks/${this.id}`, this) ) // uploading callback
         .then( response => return Object.assign(this, response.data) ) // creating callback
-        .finally( () => this.updating = null ); // state cleanup (doesn't affect chaining)
+        .finally( () => this.updating = null ) // state cleanup (doesn't affect chaining)
+      );
     }
     
     /**
@@ -41,9 +43,10 @@ module.factory( 'Task', (BaseObject, $http) => {
      * @note Added to demonstrate clean ways to have 1 method wait for another method to finish
      */
     upload(attachment) {
-      return this.uploading = $http.post(`/api/attachments`, attachment)
+      return this.cache('uploading', () => $http.post(`/api/attachments`, attachment)
         .then( response => this.attachments = response.data )
-        .finally( () => this.uploading = null ); // state cleanup (doesn't affect chaining)
+        .finally( () => this.uploading = null ) // state cleanup (doesn't affect chaining)
+      );
     }
   }
 

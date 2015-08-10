@@ -119,5 +119,3 @@ describes the verb-like state of the data or action itself. This can then be rep
 in the view as to the visual representation, and is not tied to visual information.
 
 Instead of `$scope.showSpinner` or `$scope.loading` use `task.uploading` or `project.saving` which could be rendered as a spinner, form, panel, whatever. The point is the **state flag is agnostic about the visual implementation**.
-
-[Example of clean state flag management](modules/Task/Task.js#L100-L138)

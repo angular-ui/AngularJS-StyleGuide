@@ -9,11 +9,11 @@
  *     paginator: function(Paginator, Project) {
  *       // Calls `Project.list(paginationOptions)`
  *       return new Paginator(Project.list, { limit: 50 });
- *     },
- *     // Queries the initial load
- *     projects: function(paginator) {
- *       return paginator.next();
  *     }
+ *   },
+ *   controller: function($scope, paginator) {
+ *     $scope.paginator = paginator; // ng-repeat="item in paginator.items"
+ *     paginator.next(); // asynchronously load the first dataset
  *   }
  *
  * @example
@@ -23,9 +23,9 @@
  *       // or
  *       return new Paginator( Task.list, { projectId: $stateParams.projectId } );
  *     },
- *     tasks: function(taskPaginator) {
- *       return taskPaginator.next();
- *     }
+ *   controller: function($scope, taskPaginator) {
+ *     $scope.paginator = taskPaginator; // ng-repeat="item in paginator.items"
+ *     taskPaginator.next(); // asynchronously load the first dataset
  *   }
  */
 angular.module('App').factory('Paginator', function($http, $q){

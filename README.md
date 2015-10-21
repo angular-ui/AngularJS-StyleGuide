@@ -24,7 +24,7 @@ In today's code, it's sensible keep modules together and small. HTML, JS and CSS
 #### Don't use `controllerAs: 'vm'`
 This is a practice that is becoming predominant and actually screws up a lot of the benefits of `controllerAs` syntax. Instead of namespacing and bundling controller logic, the only benefit you gain is the little `.` dot notation in `ng-model`. The name `vm` does not tell you where the logic came from or what it has to do with, and does not allow you to work with multiple bundles of logic at the same time. As such, it should be completely avoided. 
 
-#### If you can't open-source your directives, they usually shouldn't exist
+#### _[DISPUTED]_ If you can't open-source your directives, they usually shouldn't exist
 A lot of people will create what I refer to as 'one-off' directives. These usually should just be sub-states.
 If you create directives specific to your business logic, and aren't focused on purely UI visual implementation (regardless of data, application, etc) then you are too tightly coupling your business logic to your view. You are making it more difficult to quickly refactor your view or view structure. You have to track down where business logic is being executed or modified in multiple places. You start keeping track of data state and lifecycle and implementing things like events and streams because your view lifecycle isn't consistent with your data lifecycle.  
 Instead, 0 business logic in views. Rendering logic in views only. Publicly, reusable, agnostic, unopinionated, highly versatile/reusable view logic.

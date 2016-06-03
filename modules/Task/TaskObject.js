@@ -21,19 +21,19 @@ module.factory( 'Task', (BaseObject, $http) => {
      */
     create() {
       // wraps `this.uploading` in a promise that resolves immediately if it is `null` or waits for the promise
-      return this.cache('creating', () => $q.when(this.uploading)
-        .then( () => $http.post('/api/tasks', this) ) // uploading callback
-        .then( response => return Object.assign(this, response.data) ) // creating callback
-        .finally( () => this.creating = null ) // state cleanup (doesn't affect chaining)
+      return this.cache('creating', () =>
+        $q.when(this.uploading)
+          .then( () => $http.post('/api/tasks', this) ) // uploading callback
+          .then( response => return Object.assign(this, response.data) ) // creating callback
       );
     }
 
     update() {
       // wraps `this.uploading` in a promise that resolves immediately if it is `null` or waits for the promise
-      return this.cache('updating', () => $q.when(this.uploading)
-        .then( () => $http.post(`/api/tasks/${this.id}`, this) ) // uploading callback
-        .then( response => return Object.assign(this, response.data) ) // creating callback
-        .finally( () => this.updating = null ) // state cleanup (doesn't affect chaining)
+      return this.cache('updating', () =>
+        $q.when(this.uploading)
+          .then( () => $http.post(`/api/tasks/${this.id}`, this) ) // uploading callback
+          .then( response => return Object.assign(this, response.data) ) // creating callback
       );
     }
     
@@ -43,9 +43,9 @@ module.factory( 'Task', (BaseObject, $http) => {
      * @note Added to demonstrate clean ways to have 1 method wait for another method to finish
      */
     upload(attachment) {
-      return this.cache('uploading', () => $http.post(`/api/attachments`, attachment)
-        .then( response => this.attachments = response.data )
-        .finally( () => this.uploading = null ) // state cleanup (doesn't affect chaining)
+      return this.cache('uploading', () => 
+        $http.post(`/api/attachments`, attachment)
+          .then( response => this.attachments = response.data )
       );
     }
   }

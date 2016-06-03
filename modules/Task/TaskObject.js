@@ -24,7 +24,7 @@ module.factory( 'Task', (BaseObject, $http) => {
       return this.cache('creating', () =>
         $q.when(this.uploading)
           .then( () => $http.post('/api/tasks', this) ) // uploading callback
-          .then( response => return Object.assign(this, response.data) ) // creating callback
+          .then( response => Object.assign(this, response.data) ) // creating callback
       );
     }
 
@@ -33,7 +33,7 @@ module.factory( 'Task', (BaseObject, $http) => {
       return this.cache('updating', () =>
         $q.when(this.uploading)
           .then( () => $http.post(`/api/tasks/${this.id}`, this) ) // uploading callback
-          .then( response => return Object.assign(this, response.data) ) // creating callback
+          .then( response => Object.assign(this, response.data) ) // creating callback
       );
     }
     

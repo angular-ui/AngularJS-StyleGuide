@@ -9,7 +9,7 @@ $modal is part of ui.bootstrap
 // Tracks the previous location and allows you to redirect back to that location
 var previousLocation;
 
-var module = angular.module('App.Login', ['ui.router', 'ui.bootstrap']);
+var module = angular.module('App.Auth');
 
 module.config(function($stateProvider) {
   $stateProvider.state('login', {
@@ -25,7 +25,7 @@ module.config(function($stateProvider) {
         };
       },
       modal: ($modal) => $modal.open({
-        templateUrl: 'modules/Authentication/Login.html',
+        templateUrl: 'modules/Auth/Login.html',
         controller: 'Login',
       })
     },
@@ -42,11 +42,11 @@ module.run(function($rootScope, $location) {
   });
 });
 
-module.controller('Login', ($scope, UserObject, Authentication, user, redirect) => {
+module.controller('Login', ($scope, UserObject, Auth, user, redirect) => {
   $scope.user = user;
 
   $scope.login = () => {
-    Authentication.login($scope.user, $scope.rememberMe)
+    Auth.login($scope.user, $scope.rememberMe)
       .then( redirect, (response) => $scope.error = response);
   };
 });

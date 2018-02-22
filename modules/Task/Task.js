@@ -14,10 +14,10 @@ module.config( ($stateProvider) => {
       tasks: (Task, project) => Task.list(project.id)
     },
     // breadcrumbs resolved in authenticated state
-    onEnter: function(breadcrumbs) {
+    onEnter(breadcrumbs) {
       breadcrumbs.push({ label: 'Tasks', sref: 'tasks' });
     },
-    onExit: function(breadcrumbs) {
+    onExit(breadcrumbs) {
       breadcrumbs.pop();
     }
   });
@@ -30,10 +30,10 @@ module.config( ($stateProvider) => {
     templateUrl: 'modules/Task/Form.html',
     controller: 'TaskForm',
     // breadcrumbs resolved in authenticated state
-    onEnter: function(breadcrumbs) {
+    onEnter(breadcrumbs) {
       breadcrumbs.push({ label: 'New', sref: 'tasks.new' });
     },
-    onExit: function(breadcrumbs) {
+    onExit(breadcrumbs) {
       breadcrumbs.pop();
     }
   });
@@ -54,11 +54,11 @@ module.config( ($stateProvider) => {
     resolve: {
       task: (project, $stateParams) => project.getTask($stateParams.taskId)
     },
-    onEnter: function(task, breadcrumbs) {
+    onEnter(task, breadcrumbs) {
       task.open();
       breadcrumbs.push({ label: task.name, sref: 'task' });
     },
-    onExit: function(task, breadcrumbs) {
+    onExit(task, breadcrumbs) {
       task.close();
       breadcrumbs.pop();
     }

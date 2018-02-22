@@ -23,7 +23,7 @@ module.config(function($stateProvider) {
     url: '/projects', // /intro/projects
     views: {
       'modal@': { // The $modal service places HTML at the top of the document. I know, it's weird.
-        templateUrl: 'modules/Intro/projects.html'
+        templateUrl: 'modules/Intro/Projects.html'
       }
     },
   });
@@ -31,7 +31,7 @@ module.config(function($stateProvider) {
     url: '/tasks', // /intro/tasks
     views: {
       'modal@': { // The $modal service places HTML at the top of the document. I know, it's weird.
-        templateUrl: 'modules/Intro/tasks.html'
+        templateUrl: 'modules/Intro/Tasks.html'
       }
     },
   });
@@ -39,7 +39,7 @@ module.config(function($stateProvider) {
     url: '/done', // /intro/done
     views: {
       'modal@': { // The $modal service places HTML at the top of the document. I know, it's weird.
-        templateUrl: 'modules/Intro/done.html'
+        templateUrl: 'modules/Intro/Done.html'
       }
     },
   });

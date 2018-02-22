@@ -1,4 +1,4 @@
-var module = angular.module('App', ['ui.router', 'App.Authentication', 'App.Guest']);
+var module = angular.module('App', ['ui.router', 'App.Auth', 'App.Guest']);
 
 module.config(function($urlRouterProvider) {
     

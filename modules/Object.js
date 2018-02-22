@@ -45,7 +45,7 @@ module.factory('BaseObject', ($q) => {
     }
 
     /**
-     * object.save() - Convenience wrapper
+     * Convenience wrapper for update/create
      * 
      * Sets an `object.saving` flag to the promise (truthy) and clears the flag when finished
      * Using `Promise.finally()` allows you to execute code on success OR fail withought affecting chaining
@@ -55,7 +55,7 @@ module.factory('BaseObject', ($q) => {
     }
 
     /**
-     * object.create() - stubbed with example state flag creating
+     * Stubbed with example flag
      * 
      * @note Use object.save() instead of calling this method directly
      */
@@ -64,7 +64,7 @@ module.factory('BaseObject', ($q) => {
     }
     
     /**
-     * object.update() - stubbed with example state flag updating
+     * Stubbed with example flag
      * 
      * @note Use object.save() instead of calling this method directly
      */
@@ -73,7 +73,7 @@ module.factory('BaseObject', ($q) => {
     }
 
     /**
-     * object.delete() - stubbed with example state flag updating
+     * Stubbed with example flag
      */
     delete() {
       return this.cache('deleting', () => $q.when(this) );
@@ -85,6 +85,11 @@ module.factory('BaseObject', ($q) => {
      * When you edit a record in a form, you want the original to be preserved while the user makes changes
      * This allows you to edit a record exactly as if you were creating one without having to worry about
      * rolling back changes to the object.
+     *
+     * @example
+     *   let editProject = project.clone();
+     *   editProject.title = 'New Title';
+     *   editProject.save(); // or discard
      * 
      * @note This makes a shallow copy only
      */

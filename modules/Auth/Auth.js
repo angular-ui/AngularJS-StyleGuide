@@ -18,6 +18,12 @@ module.factory('Auth', ($q, $http) => {
      */
     login(user, rememberMe = false) {
       return $http.post('/api/session', user);
+    },
+    /**
+     * Take a wild guess what this does
+     */
+    logout() {
+      return $http.delete('/api/session');
     }
   }
 });

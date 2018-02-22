@@ -26,8 +26,9 @@ module.config(function($stateProvider) {
     onEnter(user) {
       user.open();
     },
-    onExit(user) {
+    onExit(user, Auth) {
       user.close();
+      Auth.logout();
     }
   });
 });

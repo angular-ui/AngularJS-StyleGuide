@@ -4,29 +4,19 @@
  * @param paginate {function} Query function that takes paginationOptions
  *
  * @example
- *   resolve: {
- *     // Prepares the paginator
- *     paginator: function(Paginator, Project) {
- *       // Calls `Project.list(paginationOptions)`
- *       return new Paginator(Project.list, { limit: 50 });
- *     }
- *   },
- *   controller: function($scope, paginator) {
- *     $scope.paginator = paginator; // ng-repeat="item in paginator.items"
- *     paginator.next(); // asynchronously load the first dataset
- *   }
+ *   let paginatedProjects = new Paginator(Project.list, { limit: 50 });
+ *   paginatedProjects.items; // data accessible here
+ *   paginatedProjects.next(); // load the first/subsequent data
  *
  * @example
- *   resolve: {
- *     taskPaginator: function(Paginator, Task, $stateParams) {
- *       return new Paginator( (paginationOptions) => Task.list($stateParams.projectId, paginationOptions) );
- *       // or
- *       return new Paginator( Task.list, { projectId: $stateParams.projectId } );
- *     },
- *   controller: function($scope, taskPaginator) {
- *     $scope.paginator = taskPaginator; // ng-repeat="item in paginator.items"
- *     taskPaginator.next(); // asynchronously load the first dataset
- *   }
+ *   let projectId = 23;
+ *   // Customize the paginator function
+ *   let paginatedTasks = new Paginator( (paginationOptions) => Task.list( projectId, paginationOptions) );
+ *
+ * @example
+ *   let projectId = 23;
+ *   // Set default parameters for paginator function
+ *   let paginatedTasks = new Paginator( Task.list, { projectId: projectId });
  */
 angular.module('App').factory('Paginator', function($http, $q){
 
@@ -48,7 +38,7 @@ angular.module('App').factory('Paginator', function($http, $q){
     }
 
     /**
-     * paginator.paginate - paginator function
+     * The function that performs the query
      *
      * @param  {url|function} paginate
      *   If a url is provided, a wrapper for $http.get() is created
@@ -62,13 +52,14 @@ angular.module('App').factory('Paginator', function($http, $q){
         this._paginate = paginate;
     }
 
+    /**
+     * @returns {function}
+     */
     get paginate() {
       return this._paginate;
     }
 
     /**
-     * reset()
-     *
      * Clear items collection. Useful for preserving related data.
      *
      * @note If you want a hard reset of all related data, create a new Paginator
@@ -87,6 +78,10 @@ angular.module('App').factory('Paginator', function($http, $q){
       return this.items = [];
     }
 
+    /**
+     * Load more items and add to cache
+     * @param {Promise}
+     */
     next() {
       if (!this.hasMore) return $q.when();
       if (this.loading) return this.loading;
@@ -104,9 +99,7 @@ angular.module('App').factory('Paginator', function($http, $q){
     }
 
     /**
-     * add()
-     *
-     * Add item to this.items and populate related
+     * Add item to cache and retrieve related data
      *
      * @param  {index|object} item Reference to an object or the index
      */
@@ -116,9 +109,7 @@ angular.module('App').factory('Paginator', function($http, $q){
     }
 
     /**
-     * remove()
-     *
-     * Remove item from this.items
+     * Remove item from cache
      *
      * @param  {index|object} item Reference to an object or the index
      */
@@ -131,8 +122,6 @@ angular.module('App').factory('Paginator', function($http, $q){
     }
 
     /**
-     * getRelated(newItems)
-     *
      * Iterates over related data retrieval helpers
      * When each helper resolves with a hash of relatedItems, they are merged onto
      * the paginator's existing cache of related items.
